@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>机器学习 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="一个小尝试.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习">
+<meta property="og:url" content="http://example.com/2021/04/27/pa/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一个小尝试.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-04-01T12:23:19.014Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="jekyll">
+<meta property="article:tag" content="post">
+<meta property="article:tag" content="blog">
+<meta property="article:tag" content="about">
+<meta property="article:tag" content="theme">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-pa" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/04/27/pa/" class="article-date">
+  <time class="dt-published" datetime="2021-04-26T16:00:00.000Z" itemprop="datePublished">2021-04-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      机器学习
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="ML"><a href="#ML" class="headerlink" title="ML"></a>ML</h1><h2 id="Pandas基础知识"><a href="#Pandas基础知识" class="headerlink" title="Pandas基础知识"></a>Pandas基础知识</h2><ol>
+<li>将路径path中的文件读取到file: 将路径path中的文件读取到file: <code>file = pd.read_csv()</code></li>
+<li>观察file文件中都有哪些列: <code>file.columns</code></li>
+<li>舍弃空值数据: <code>file = file.dropna(axis=0)</code>  (记忆na:not available)</li>
+<li>选择需要预测的列如Price：<code>y = file.Price</code></li>
+<li>选择用来预测的列项：<br> <code>features = [&#39;Rooms&#39;, &#39;Bathroom&#39;, &#39;Landsize&#39;]</code><br> <code>X = file[features]</code></li>
+<li>预览效果：<code>X.describe()</code> 或 <code>X.head()</code></li>
+</ol>
+<h1 id="scikit-learn库-sklearn"><a href="#scikit-learn库-sklearn" class="headerlink" title="scikit-learn库(sklearn)"></a>scikit-learn库(sklearn)</h1><h2 id="建模步骤："><a href="#建模步骤：" class="headerlink" title="建模步骤："></a>建模步骤：</h2><ol>
+<li>Define: 定义数据类型，decision tree</li>
+<li>Fit：调试模型，核心部分</li>
+<li>Predict：预测结果</li>
+<li>Evaluate：评估准确性</li>
+</ol>
+<h3 id="建模及输出Ex"><a href="#建模及输出Ex" class="headerlink" title="建模及输出Ex:"></a>建模及输出Ex:</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisonTreeRegressor  </span><br><span class="line"></span><br><span class="line"><span class="comment"># Define model. Specify a number for random_state to ensure same results each run  </span></span><br><span class="line">model = DecisonTreeRegressor(random_state=<span class="number">1</span>)  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 调试模型  </span></span><br><span class="line">model.fit(X,y)  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出展示</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Making predictions for the following 5 houses:&quot;</span>)  </span><br><span class="line"><span class="built_in">print</span>(X.head())  </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The predictions are&quot;</span>)  </span><br><span class="line"><span class="built_in">print</span>(model.predict(X.head()))  </span><br><span class="line">```    </span><br><span class="line">最简单的评估算法：Mean Absolute Error(MAE), 即对预测值与实际值差值的绝对值求和取均值。  </span><br><span class="line">简单的例子：  </span><br><span class="line">``` python  </span><br><span class="line"><span class="keyword">from</span> sklearn.metrics   <span class="keyword">import</span> mean_absolute_error  </span><br><span class="line">predicted_home_prices = model.predict(X)  </span><br><span class="line">mean_absolute_error(y, predicted_home_prices)  </span><br><span class="line">```  </span><br><span class="line">但是这其中存在一个很大的问题：应当在模型建立时排除掉一些数据，而在检测时用这些并未参与建模过程的新数据去检测。  </span><br><span class="line">解决方法：利用sklearn中的train_test_split函数将数据分为两块。</span><br><span class="line">Code：</span><br><span class="line">  ```python   </span><br><span class="line">  <span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split  </span><br><span class="line"></span><br><span class="line">  <span class="comment">#将数据分为训练数据和验证数据，分别用于建模和目标，为random_state赋值以保证每次运行得到相同的两组数据。  </span></span><br><span class="line">  train_X,val_X, train_y, val_y = train_test_split(X, y, random_state=<span class="number">0</span>)   </span><br><span class="line">  <span class="comment">#定义模型  </span></span><br><span class="line">  model = DecisonTreeRegressor()  </span><br><span class="line">  <span class="comment">#调试模型  </span></span><br><span class="line">  model.fit(train_X, train_y)   </span><br><span class="line">  <span class="comment">#输出预测值  </span></span><br><span class="line">  val_predictions = model.predict(val_X)  </span><br><span class="line">  <span class="built_in">print</span>(mean_absolute_error(val_y, val_predictions))</span><br></pre></td></tr></table></figure>
+<h4 id="一个新的模型：random-forests"><a href="#一个新的模型：random-forests" class="headerlink" title="一个新的模型：random forests"></a>一个新的模型：random forests</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestRegressor  </span><br><span class="line">```  </span><br><span class="line"><span class="comment">## 完整程序：  </span></span><br><span class="line">```python  </span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd  </span><br><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisonTreeRegressor  </span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestRegressor  </span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split  </span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_absolute_error  </span><br><span class="line"></span><br><span class="line">iowa_file_path = <span class="string">&#x27;../input/train.csv&#x27;</span>  </span><br><span class="line">home_data = pd.read_csv(iowa_file_path)</span><br><span class="line"></span><br><span class="line"><span class="comment"># creat features and target</span></span><br><span class="line">y = home_data.SalePrice  </span><br><span class="line">features = [<span class="string">&#x27;LotArea&#x27;</span>, <span class="string">&#x27;YearBuilt&#x27;</span>, <span class="string">&#x27;1stF1rSF&#x27;</span>, <span class="string">&#x27;2ndF1rSF&#x27;</span>, <span class="string">&#x27;Fullbath&#x27;</span>, <span class="string">&#x27;BedroomAbvGr&#x27;</span>, <span class="string">&#x27;TotRmsAbvGrd&#x27;</span>]  </span><br><span class="line">train_X, val_X, train_y, val_y = train_test_split(X,y,random_state=<span class="number">1</span>)  </span><br><span class="line"></span><br><span class="line"><span class="comment"># Specify Model and Fit it  </span></span><br><span class="line">iowa_model = DecisonTreeRegressor(random_state=<span class="number">1</span>)  </span><br><span class="line">iowa_model.fit(train_X,train_y)  </span><br><span class="line"></span><br><span class="line"><span class="comment"># Predict and Evaluate  </span></span><br><span class="line">val_predictions = iowa_model.predict(val_X)  </span><br><span class="line">val_mae = mean_absolute_error(val_predictions, val_y)  </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Validation MAE when not specifying max_leaf_nodes: &#123;:,.0f&#125;&quot;</span>.<span class="built_in">format</span>(val_mae))  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># function to find the max_leaf_nodes    </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_mae</span>(<span class="params">max_leaf_nodes, train_X, val_X, train_y, val_y</span>):</span><br><span class="line">  model = DecisonTreeRegressor(max_leaf_nodes=max_leaf_nodes, random_state=<span class="number">1</span>)  </span><br><span class="line">  model.fit(train_X, train_y)  </span><br><span class="line">  val_predictions = model.predict(val_X)  </span><br><span class="line">  mae = mean_absolute_error(val_predictions, val_y)  </span><br><span class="line">  <span class="keyword">return</span>(mae)  </span><br><span class="line"></span><br><span class="line"><span class="comment"># The best tree size</span></span><br><span class="line">candidate_max_leaf_nodes = [<span class="number">5</span>,<span class="number">25</span>,<span class="number">50</span>,<span class="number">100</span>,<span class="number">250</span>,<span class="number">500</span>,<span class="number">1000</span>]  </span><br><span class="line">scores = &#123;leaf_size: get_mae(leaf_size, train_X, val_X, train_y, val_y) <span class="keyword">for</span> leaf_size <span class="keyword">in</span> candidate_max_leaf_nodes&#125;  </span><br><span class="line">best_tree_size = <span class="built_in">min</span>(socres, key = scores.get)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Using best value for max_leaf_nodes</span></span><br><span class="line">best_iowa_model = DecisonTreeRegressor(max_leaf_nodes=best_tree_size, random_state=<span class="number">1</span>)  </span><br><span class="line">best_val_predictionsiowa_model.fit(train_X, train_y)  </span><br><span class="line">best_val_predictions = best_iowa_model.predict(val_X)  </span><br><span class="line">best_val_mae = mean_absolute_error(best_val_predictions, val_y)  </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Validation MAE for best value of max_leaf_nodes: &#123;:,.0f&#125;&quot;</span>.<span class="built_in">float</span>(best_val_mae))  </span><br><span class="line"></span><br><span class="line"><span class="comment"># Random Foreset Model  </span></span><br><span class="line">rf_model = RandomForestRegressor(random_state=<span class="number">1</span>)  </span><br><span class="line">rf_model.fit(train_X, train_y)  </span><br><span class="line">rf_val_predictions = rf_model.predict(val_X)  </span><br><span class="line">rf_val_mae = mean_absolute_error(rf_val_predictions, val_y)  </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Validation MAE for Random Foreset Model: &#123;:,.0f&#125;&quot;</span>.<span class="built_in">format</span>(rf_val_mae))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 基于全部数据建立一个新模型并将预测结果输出至Output.to_csv</span></span><br><span class="line">rf_model_on_full_data = RandomForestRegressor(random_state=<span class="number">1</span>)  </span><br><span class="line">rf_model_on_full_data.fit(X, y)  </span><br><span class="line">test_data_path = <span class="string">&#x27;../input/test.csv&#x27;</span>  </span><br><span class="line">test_data = pd.read_csv(test_data_path)  </span><br><span class="line">test_X = test_data[features]</span><br><span class="line">test_preds = rf_model_on_full_data.predict(test_X)  </span><br><span class="line">output = pd.DataFrame(&#123;<span class="string">&#x27;Id&#x27;</span>: test_data.Id, <span class="string">&#x27;SalePrice&#x27;</span>: test_preds&#125;)  </span><br><span class="line">output.to_csv(<span class="string">&#x27;Output.csv&#x27;</span>, index=<span class="literal">False</span>)  </span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/04/27/pa/" data-id="cl1gerz6o0000k8v59ufm8uxp" data-title="机器学习" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/about/" rel="tag">about</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/" rel="tag">blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jekyll/" rel="tag">jekyll</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/post/" rel="tag">post</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/theme/" rel="tag">theme</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/04/01/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/about/" rel="tag">about</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/" rel="tag">jekyll</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/post/" rel="tag">post</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/theme/" rel="tag">theme</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/about/" style="font-size: 10px;">about</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/jekyll/" style="font-size: 10px;">jekyll</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/theme/" style="font-size: 10px;">theme</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/04/01/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/27/pa/">机器学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
