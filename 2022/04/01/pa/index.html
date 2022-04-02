@@ -1,0 +1,455 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="MLPandas基础知识 将路径path中的文件读取到file: 将路径path中的文件读取到file: file &#x3D; pd.read_csv() 观察file文件中都有哪些列: file.columns 舍弃空值数据: file &#x3D; file.dropna(axis&#x3D;0)  (记忆na:not available) 选择需要预测的列如Price：y &#x3D; file.Price 选择用来预测的列项：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习">
+<meta property="og:url" content="http://example.com/2022/04/01/pa/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="MLPandas基础知识 将路径path中的文件读取到file: 将路径path中的文件读取到file: file &#x3D; pd.read_csv() 观察file文件中都有哪些列: file.columns 舍弃空值数据: file &#x3D; file.dropna(axis&#x3D;0)  (记忆na:not available) 选择需要预测的列如Price：y &#x3D; file.Price 选择用来预测的列项：">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-04-01T12:41:36.426Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="jekyll">
+<meta property="article:tag" content="post">
+<meta property="article:tag" content="blog">
+<meta property="article:tag" content="about">
+<meta property="article:tag" content="theme">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>机器学习 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="机器学习">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-01 00:00" pubdate>
+        2022年4月1日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      34 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">机器学习</h1>
+            
+            <div class="markdown-body">
+              <h1 id="ML"><a href="#ML" class="headerlink" title="ML"></a>ML</h1><h2 id="Pandas基础知识"><a href="#Pandas基础知识" class="headerlink" title="Pandas基础知识"></a>Pandas基础知识</h2><ol>
+<li>将路径path中的文件读取到file: 将路径path中的文件读取到file: <code>file = pd.read_csv()</code></li>
+<li>观察file文件中都有哪些列: <code>file.columns</code></li>
+<li>舍弃空值数据: <code>file = file.dropna(axis=0)</code>  (记忆na:not available)</li>
+<li>选择需要预测的列如Price：<code>y = file.Price</code></li>
+<li>选择用来预测的列项：<br> <code>features = [&#39;Rooms&#39;, &#39;Bathroom&#39;, &#39;Landsize&#39;]</code><br> <code>X = file[features]</code></li>
+<li>预览效果：<code>X.describe()</code> 或 <code>X.head()</code></li>
+</ol>
+<h1 id="scikit-learn库-sklearn"><a href="#scikit-learn库-sklearn" class="headerlink" title="scikit-learn库(sklearn)"></a>scikit-learn库(sklearn)</h1><h2 id="建模步骤："><a href="#建模步骤：" class="headerlink" title="建模步骤："></a>建模步骤：</h2><ol>
+<li>Define: 定义数据类型，decision tree</li>
+<li>Fit：调试模型，核心部分</li>
+<li>Predict：预测结果</li>
+<li>Evaluate：评估准确性</li>
+</ol>
+<h3 id="建模及输出Ex"><a href="#建模及输出Ex" class="headerlink" title="建模及输出Ex:"></a>建模及输出Ex:</h3><figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.tree <span class="hljs-keyword">import</span> DecisonTreeRegressor  <br><br><span class="hljs-comment"># Define model. Specify a number for random_state to ensure same results each run  </span><br>model = DecisonTreeRegressor(random_state=<span class="hljs-number">1</span>)  <br><br><span class="hljs-comment"># 调试模型  </span><br>model.fit(X,y)  <br><br><span class="hljs-comment"># 输出展示</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Making predictions for the following 5 houses:&quot;</span>)  <br><span class="hljs-built_in">print</span>(X.head())  <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;The predictions are&quot;</span>)  <br><span class="hljs-built_in">print</span>(model.predict(X.head()))  <br>```    <br>最简单的评估算法：Mean Absolute Error(MAE), 即对预测值与实际值差值的绝对值求和取均值。  <br>简单的例子：  <br>``` python  <br><span class="hljs-keyword">from</span> sklearn.metrics   <span class="hljs-keyword">import</span> mean_absolute_error  <br>predicted_home_prices = model.predict(X)  <br>mean_absolute_error(y, predicted_home_prices)  <br>```  <br>但是这其中存在一个很大的问题：应当在模型建立时排除掉一些数据，而在检测时用这些并未参与建模过程的新数据去检测。  <br>解决方法：利用sklearn中的train_test_split函数将数据分为两块。<br>Code：<br>  ```python   <br>  <span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split  <br><br>  <span class="hljs-comment">#将数据分为训练数据和验证数据，分别用于建模和目标，为random_state赋值以保证每次运行得到相同的两组数据。  </span><br>  train_X,val_X, train_y, val_y = train_test_split(X, y, random_state=<span class="hljs-number">0</span>)   <br>  <span class="hljs-comment">#定义模型  </span><br>  model = DecisonTreeRegressor()  <br>  <span class="hljs-comment">#调试模型  </span><br>  model.fit(train_X, train_y)   <br>  <span class="hljs-comment">#输出预测值  </span><br>  val_predictions = model.predict(val_X)  <br>  <span class="hljs-built_in">print</span>(mean_absolute_error(val_y, val_predictions))<br></code></pre></td></tr></table></figure>
+<h4 id="一个新的模型：random-forests"><a href="#一个新的模型：random-forests" class="headerlink" title="一个新的模型：random forests"></a>一个新的模型：random forests</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> RandomForestRegressor  <br>```  <br><span class="hljs-comment">## 完整程序：  </span><br>```python  <br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd  <br><span class="hljs-keyword">from</span> sklearn.tree <span class="hljs-keyword">import</span> DecisonTreeRegressor  <br><span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> RandomForestRegressor  <br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split  <br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> mean_absolute_error  <br><br>iowa_file_path = <span class="hljs-string">&#x27;../input/train.csv&#x27;</span>  <br>home_data = pd.read_csv(iowa_file_path)<br><br><span class="hljs-comment"># creat features and target</span><br>y = home_data.SalePrice  <br>features = [<span class="hljs-string">&#x27;LotArea&#x27;</span>, <span class="hljs-string">&#x27;YearBuilt&#x27;</span>, <span class="hljs-string">&#x27;1stF1rSF&#x27;</span>, <span class="hljs-string">&#x27;2ndF1rSF&#x27;</span>, <span class="hljs-string">&#x27;Fullbath&#x27;</span>, <span class="hljs-string">&#x27;BedroomAbvGr&#x27;</span>, <span class="hljs-string">&#x27;TotRmsAbvGrd&#x27;</span>]  <br>train_X, val_X, train_y, val_y = train_test_split(X,y,random_state=<span class="hljs-number">1</span>)  <br><br><span class="hljs-comment"># Specify Model and Fit it  </span><br>iowa_model = DecisonTreeRegressor(random_state=<span class="hljs-number">1</span>)  <br>iowa_model.fit(train_X,train_y)  <br><br><span class="hljs-comment"># Predict and Evaluate  </span><br>val_predictions = iowa_model.predict(val_X)  <br>val_mae = mean_absolute_error(val_predictions, val_y)  <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Validation MAE when not specifying max_leaf_nodes: &#123;:,.0f&#125;&quot;</span>.<span class="hljs-built_in">format</span>(val_mae))  <br><br><br><span class="hljs-comment"># function to find the max_leaf_nodes    </span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_mae</span>(<span class="hljs-params">max_leaf_nodes, train_X, val_X, train_y, val_y</span>):<br>  model = DecisonTreeRegressor(max_leaf_nodes=max_leaf_nodes, random_state=<span class="hljs-number">1</span>)  <br>  model.fit(train_X, train_y)  <br>  val_predictions = model.predict(val_X)  <br>  mae = mean_absolute_error(val_predictions, val_y)  <br>  <span class="hljs-keyword">return</span>(mae)  <br><br><span class="hljs-comment"># The best tree size</span><br>candidate_max_leaf_nodes = [<span class="hljs-number">5</span>,<span class="hljs-number">25</span>,<span class="hljs-number">50</span>,<span class="hljs-number">100</span>,<span class="hljs-number">250</span>,<span class="hljs-number">500</span>,<span class="hljs-number">1000</span>]  <br>scores = &#123;leaf_size: get_mae(leaf_size, train_X, val_X, train_y, val_y) <span class="hljs-keyword">for</span> leaf_size <span class="hljs-keyword">in</span> candidate_max_leaf_nodes&#125;  <br>best_tree_size = <span class="hljs-built_in">min</span>(socres, key = scores.get)<br><br><span class="hljs-comment"># Using best value for max_leaf_nodes</span><br>best_iowa_model = DecisonTreeRegressor(max_leaf_nodes=best_tree_size, random_state=<span class="hljs-number">1</span>)  <br>best_val_predictionsiowa_model.fit(train_X, train_y)  <br>best_val_predictions = best_iowa_model.predict(val_X)  <br>best_val_mae = mean_absolute_error(best_val_predictions, val_y)  <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Validation MAE for best value of max_leaf_nodes: &#123;:,.0f&#125;&quot;</span>.<span class="hljs-built_in">float</span>(best_val_mae))  <br><br><span class="hljs-comment"># Random Foreset Model  </span><br>rf_model = RandomForestRegressor(random_state=<span class="hljs-number">1</span>)  <br>rf_model.fit(train_X, train_y)  <br>rf_val_predictions = rf_model.predict(val_X)  <br>rf_val_mae = mean_absolute_error(rf_val_predictions, val_y)  <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Validation MAE for Random Foreset Model: &#123;:,.0f&#125;&quot;</span>.<span class="hljs-built_in">format</span>(rf_val_mae))<br><br><span class="hljs-comment"># 基于全部数据建立一个新模型并将预测结果输出至Output.to_csv</span><br>rf_model_on_full_data = RandomForestRegressor(random_state=<span class="hljs-number">1</span>)  <br>rf_model_on_full_data.fit(X, y)  <br>test_data_path = <span class="hljs-string">&#x27;../input/test.csv&#x27;</span>  <br>test_data = pd.read_csv(test_data_path)  <br>test_X = test_data[features]<br>test_preds = rf_model_on_full_data.predict(test_X)  <br>output = pd.DataFrame(&#123;<span class="hljs-string">&#x27;Id&#x27;</span>: test_data.Id, <span class="hljs-string">&#x27;SalePrice&#x27;</span>: test_preds&#125;)  <br>output.to_csv(<span class="hljs-string">&#x27;Output.csv&#x27;</span>, index=<span class="hljs-literal">False</span>)  <br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/jekyll/">jekyll</a>
+                    
+                      <a class="hover-with-bg" href="/tags/post/">post</a>
+                    
+                      <a class="hover-with-bg" href="/tags/blog/">blog</a>
+                    
+                      <a class="hover-with-bg" href="/tags/about/">about</a>
+                    
+                      <a class="hover-with-bg" href="/tags/theme/">theme</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
