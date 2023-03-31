@@ -1,0 +1,696 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="20230323汪浩东周报本周主要对于Ad Hoc中的相关问题进行了更深的思考，以期找到其（包括无线场景）的问题，尤其是在与NDN相结合的方面，因为经过小组讨论认为，目前我们仍未搞清楚将大背景移到无线场景下时，会有什么不同以及新的问题的来源及解决方案。 Ad Hoc(无线)场景下的问题（以广播风暴为例）首先是这个大的背景问题，对于无线以及Ad Hoc这个新场景，其所面临的问题我们始终没有理清楚，以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ad Hoc">
+<meta property="og:url" content="http://example.com/2023/03/31/20230323/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="20230323汪浩东周报本周主要对于Ad Hoc中的相关问题进行了更深的思考，以期找到其（包括无线场景）的问题，尤其是在与NDN相结合的方面，因为经过小组讨论认为，目前我们仍未搞清楚将大背景移到无线场景下时，会有什么不同以及新的问题的来源及解决方案。 Ad Hoc(无线)场景下的问题（以广播风暴为例）首先是这个大的背景问题，对于无线以及Ad Hoc这个新场景，其所面临的问题我们始终没有理清楚，以">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-31T15:06:24.186Z">
+<meta property="article:modified_time" content="2023-03-31T15:24:31.682Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Ad Hoc - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Ad Hoc"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-31 23:06" pubdate>
+          2023年3月31日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          29 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Ad Hoc</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="20230323汪浩东周报"><a href="#20230323汪浩东周报" class="headerlink" title="20230323汪浩东周报"></a>20230323汪浩东周报</h2><p>本周主要对于Ad Hoc中的相关问题进行了更深的思考，以期找到其（包括无线场景）的问题，尤其是在与NDN相结合的方面，因为经过小组讨论认为，目前我们仍未搞清楚将大背景移到无线场景下时，会有什么不同以及新的问题的来源及解决方案。</p>
+<h3 id="Ad-Hoc-无线-场景下的问题（以广播风暴为例）"><a href="#Ad-Hoc-无线-场景下的问题（以广播风暴为例）" class="headerlink" title="Ad Hoc(无线)场景下的问题（以广播风暴为例）"></a>Ad Hoc(无线)场景下的问题（以广播风暴为例）</h3><p>首先是这个大的背景问题，对于无线以及Ad Hoc这个新场景，其所面临的问题我们始终没有理清楚，以广播风暴为例。</p>
+<p>首先，在无线Ad Hoc网络中，因为没有有线连接的支持，以及无线信道的有损性（在Ad hoc中还需要考虑移动性），因此一般采用广播的方式传输包，注意，此处的广播指的是数据链路层，即使用共享广播信道，让所有主机接收同样的包。而这样的广播方式将会带来以下三个问题：</p>
+<h4 id="冗余"><a href="#冗余" class="headerlink" title="冗余"></a>冗余</h4><p>对于冗余这个概念，之前我的理解是：“多个主机对相同的包都进行了广播，从而导致了冗余”，但实际上这个理解是错误的，其真正含义应该为：</p>
+<blockquote>
+<p><em><strong>“当主机决定将收到的广播消息再次广播给邻居时，它的邻居实际上已经拥有了该消息”</strong></em></p>
+</blockquote>
+<p>即它的邻居实际上已经收到了来自于其他主机的相同广播消息，再次广播是不必要的，因此称其为<em><strong>“冗余”</strong></em>。具体以下图来说明：<br>![广播冗余](D:\OneDrive - USTC\mySVN\Whd\Md\assets\广播冗余.png)<br>如图所示，B在A的通信范围内，当B收到A的广播消息后，如果其决定再次广播，则能受益的区域（即没有被A广播到的区域）面积为：<br>$$<br>\text{EAC}=|S_{B-A}| = |S_A|-|S_{A \cap B}| = \pi r^2 - \text{INTC}(d)<br>= \pi r^2 - 4 \int_{d/2}^{r} \sqrt{r^2-x^2}<br>$$<br>当$d=r$时，上式取得最大值，但也仅为$0.61\pi r^2$，考虑一般情况，假设B随机处于A的通信范围内任意位置，则可求得EAC的均值为：</p>
+<p>$$ \int_0^r \frac{2\pi x \cdot [\pi r^2 - \text{INTC}(x)]}{\pi r^2} dx \approx 0.41\pi r^2$$</p>
+<p>再次将场景扩展，考虑在一个主机的通信范围内存在多个主机的情况下，则相应的再次广播能够带来的额外覆盖率EAC比例与主机数$k$的关系如下图所示：<br>![1679580193476](D:\OneDrive - USTC\mySVN\Whd\Md\assets\1679580193476.png)</p>
+<p>由图可见，当$k$超过4之后，再次广播所带来的额外覆盖增益已经低于$0.05%$，即此时再次广播明显是冗余的。[^Note]<br>[^Note]:对于并不处于通信范围内的多个主机，当其收到相同广播消息并且向同一节点进行再次广播操作时，这是有必要的，因为可以提升下一节点收到消息的概率，这便体现出了原来的理解的错误之处。</p>
+<h4 id="争用"><a href="#争用" class="headerlink" title="争用"></a>争用</h4><p>争用实际上应当是广播风暴在Ad hoc中最为致命的一点。如前所述，在广播操作中，多个主机实际上是共享相同的广播信道，因此当多个主机同时想要进行广播操作时，就会产生争用问题。</p>
+<p>以两个主机为例，假设B和C都接收到了A的广播消息，则只有当C处于$S_{A\cap B}$区域时，会发生争用，其概率为：<br>$$\int_0^r \frac{2 \pi x \cdot text{INTC}(x)/ \pi r^2}{\pi r^2}dx \approx 59%$$<br>当此场景扩展到A的通信范围内有$n$个主机，则有$k$个主机在重播时没有发生争用的概率如图所示：<br>![1679582024824](D:\OneDrive - USTC\mySVN\Whd\Md\assets\1679582024824.png)<br>由图可见，当$n \geq 6$时，所有主机都经历争用的概率$cf(n,0)$已经超过0.8。</p>
+<h4 id="冲突"><a href="#冲突" class="headerlink" title="冲突"></a>冲突</h4><p>首先，是CSMA/CA协议，区别于有限局域网中的CSMA/CD协议，在无线环境中，采用的是CA(collision avoidance)，而非CD(collision detection)。无论CSMA/CA还是CSMA/CD，其思想都来源于CSMA(Carrier Sense Multiple Access)，而CSMA实际上来源于Aloha，Aloha的思想可以概括如下：</p>
+<blockquote>
+<p>一个aloha节点只要有数据的话，该节点就可以立即发送。当该节点数据发送完之后，其需要等待接收方反馈的ACK。若成功接收到ACK之后，那么这一次传输成功。如果没有收到ACK的话，那么这一次传输失败。该aloha节点会认为网络中还存在另外一个aloha节点也在发送数据，所以造成接收方发生了冲突。最后这些冲突的节点会随机选择一个时间进行退避（backoff），以避免下一次冲突。若冲突节点回退完成，其才可以重新进行发送。</p>
+</blockquote>
+<p>而CSMA相对与Aloha，增添了LBT(listen before talk)机制，即：</p>
+<blockquote>
+<p>CSMA节点在每一次发送之前先监听信道是否是空闲的，如果信道不是空闲的话，那么就不发送数据，等待一会再进行尝试。只有确保是空闲的情况下，才可以发送数据，从而避免打断其他节点正在进行的传输过程。</p>
+</blockquote>
+<p>其可以分为三种模式<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Difference between 1-persistent, p-persistent and Non-persistent CSMA - GeeksforGeeks](https://www.geeksforgeeks.org/difference-between-1-persistent-p-persistent-and-non-persistent-csma/)">[1]</span></a></sup>：</p>
+<ul>
+<li>1-persistentes CSMA：“<strong>节点需要持续监听信道，一旦节点发现信道空闲后，则立刻发送数据。</strong>”</li>
+<li>0-persistentes CSMA：“<strong>节点不连续监听信道，若该时刻节点监听信道为busy，那么等待一段时间后，再次进行监听。若节点该时刻监听信道为空闲，则立刻发送数据。</strong>”</li>
+<li>p-persistentes CSMA：“<strong>节点需要持续监听信道，一旦发现信道空闲后，节点以p的概率立刻发送数据，以1-p的概率不发送数据。若节点该时刻不发送数据，那么等待一段时间后，再次进行监听，并以p概率再次发送</strong>”。</li>
+</ul>
+<p>在以上三种CSMA机制中，若节点传输发送冲突，则类似aloha的基本算法，随机等待一个时间之后，再次进行重试。接下来便可以进一步探讨CSMA/CD与CSMA/CA。</p>
+<p>在思想上，CSMA/CD类似于1-persistentes CSMA，而CSMA/CA类似于p-persistentes CSMA，即CSMA/CD是持续监听信道，一旦监听到空闲立刻发生数据，在发送数据时依然检测信道是否有冲突，如果有冲突就停止发送并等待一段随机时间后重试；CSMA/CA是在发送数据前检测信道是否空闲，如果空闲则对backoff counter进行减一操作，直至counter为零才可以发送数据并等待确认帧，如果不空闲则挂起counter，等待一段随机时间后重试。两者的对比可参见<a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/difference-between-csma-ca-and-csma-cd/?ref=rp">Difference between CSMA/CA and CSMA/CD - GeeksforGeeks</a>、<a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/carrier-sense-multiple-access-csma/">Carrier Sense Multiple Access (CSMA) - GeeksforGeeks</a></p>
+<p>知道了两者的不同之后，产生了一个新问题：为什么在无线环境下不再执行CD，而是需要更改为CA？</p>
+<p>在有线网络中，如果发生冲突，站点可以通过接收信号的能量变化来检测到冲突。因此，它们可以立即停止发送并等待一段随机时间后再重试，这样可以减少冲突的可能性和浪费的带宽。而在无线网络中，由于信号能量的变化很小，站点很难检测到冲突。因此，它们需要等待整个数据包发送完毕后才能知道是否发生了冲突。这样会导致更多的带宽浪费和延迟。所以，在无线网络中，冲突避免更加重要和必要。</p>
+<h4 id="隐藏终端和暴露终端"><a href="#隐藏终端和暴露终端" class="headerlink" title="隐藏终端和暴露终端"></a>隐藏终端和暴露终端</h4><p>在无线环境下，还有两个很重要的问题，即隐藏终端和暴露终端，如下面两张图所示。<br>![](D:\OneDrive - USTC\mySVN\Whd\Md\assets\隐蔽站和暴露站.png)</p>
+<p>对于隐藏终端问题，可以通过RTS/CTS机制来解决：在发送数据之前，站点先发送一个请求发送（RTS）的信号给接收站点，接收站点回复一个清除发送（CTS）的信号给发送站点和其他邻近站点。这样，其他邻近站点就知道有一个正在进行的传输，并且等待一段时间后再尝试发送，这种方式可以有效地减少隐藏终端问题造成的冲突和带宽浪费。</p>
+<p>但需要注意的是，RTS/CTS机制在IEEE 802.11协议中是可选项而非必选项，因为如果 A正在向 B 发送一个小数据包，那么对于 A来说，简单地发送数据包并准备好在它受到干扰时重新发送，比试图阻止这种干扰要便宜得多。</p>
+<p><strong>以上所讨论的都是一对一的情况，实际上在802.11中不考虑一对多的情况</strong></p>
+<section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/difference-between-1-persistent-p-persistent-and-non-persistent-csma/">Difference between 1-persistent, p-persistent and Non-persistent CSMA - GeeksforGeeks</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Ad Hoc</div>
+      <div>http://example.com/2023/03/31/20230323/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月31日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/31/hello-world/" title="Hello World">
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
