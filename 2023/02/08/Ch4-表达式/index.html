@@ -1,0 +1,776 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Whd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="本章主要介绍由语言本身定义、并用于内置类型运算对象的运算符，同时简单介绍介绍几种标准库定义的运算符。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2023/02/08/Ch4-%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="本章主要介绍由语言本身定义、并用于内置类型运算对象的运算符，同时简单介绍介绍几种标准库定义的运算符。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kinvy-images.oss-cn-beijing.aliyuncs.com/Images/image-20211224155915096.png">
+<meta property="og:image" content="https://kinvy-images.oss-cn-beijing.aliyuncs.com/Images/image-20211224160003044.png">
+<meta property="og:image" content="https://kinvy-images.oss-cn-beijing.aliyuncs.com/Images/image-20211224162959652.png">
+<meta property="article:published_time" content="2023-02-08T12:45:29.189Z">
+<meta property="article:modified_time" content="2023-08-23T14:25:20.031Z">
+<meta property="article:author" content="Whd">
+<meta property="article:tag" content="C++ Primer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://kinvy-images.oss-cn-beijing.aliyuncs.com/Images/image-20211224155915096.png">
+  
+  
+  
+  <title>Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-08 20:45" pubdate>
+          2023年2月8日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第4章-表达式">第4章 表达式</h1>
+<h2 id="基础">1. 基础</h2>
+<p>一些运算符的基本概念</p>
+<h3 id="基本概念">1.1 基本概念</h3>
+<p>#### 重载运算符</p>
+<p>赋予基本运算符不同的含义和运算方式，使用重载运算符时，其包括运算对象的类型和返回值的类型，都是由该运算符定义的；但是运算对象的个数、运算符的优先级和结合律都是无法改变的
+。</p>
+<h4 id="左值和右值">左值和右值</h4>
+<p>左值，使用的是对象的<strong>身份</strong>（在内存中的位置）；右值，使用的是对象的<strong>值</strong>（内容）。</p>
+<h3 id="优先级与结合律">1.2 优先级与结合律</h3>
+<p>基本的运算优先级和数学中的优先级一样。</p>
+<p>括号无视优先级，在不确定默认的优先级时可以使用括号。</p>
+<h2 id="算术运算符">2. 算术运算符</h2>
+<p>常用算术运算符</p>
+<figure>
+<img src="https://kinvy-images.oss-cn-beijing.aliyuncs.com/Images/image-20211224155915096.png" srcset="/img/loading.gif" lazyload alt="image-20211224155915096">
+<figcaption aria-hidden="true">image-20211224155915096</figcaption>
+</figure>
+<h2 id="逻辑和关系运算符">3. 逻辑和关系运算符</h2>
+<p>逻辑和关系运算符</p>
+<figure>
+<img src="https://kinvy-images.oss-cn-beijing.aliyuncs.com/Images/image-20211224160003044.png" srcset="/img/loading.gif" lazyload alt="image-20211224160003044">
+<figcaption aria-hidden="true">image-20211224160003044</figcaption>
+</figure>
+<p><strong>短路原则</strong>：</p>
+<ul>
+<li>对于逻辑与运算符来说，当且仅当左侧运算对象为真时才对右侧运算对象求值</li>
+<li>对于逻辑或运算符来说，当且仅当左侧运算对象为假时才对右侧运算对象求值</li>
+</ul>
+<h2 id="赋值运算符">4. 赋值运算符</h2>
+<p>赋值和初始化是两个不同的概念，虽然都使用 <code>=</code> 运算符</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> i = <span class="hljs-number">10</span>, k = <span class="hljs-number">0</span>;		<span class="hljs-comment">//这里是初始化，不是赋值操作</span><br><span class="hljs-type">int</span> j;					<span class="hljs-comment">//声明定义一个变量</span><br>j = <span class="hljs-number">1</span>;					<span class="hljs-comment">//赋值操作</span><br></code></pre></td></tr></table></figure>
+<p><strong>赋值运算符满足右结合律</strong>。对于多重赋值语句中的每一个对象，它的类型或者与右边对象的类型相同、或者可由右边对象的类型转换得到</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> i,j;<br>i = j = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 正确，都被赋值为0</span><br><span class="hljs-type">int</span> v, *p;<br>v = p = <span class="hljs-number">0</span>; <span class="hljs-comment">// 错误，不能把指针的值赋给int</span><br></code></pre></td></tr></table></figure>
+<h2 id="递增和递减运算符">5. 递增和递减运算符</h2>
+<p>递增（递减）运算符有前置（<code>++i</code>）和后置（<code>i++</code>）</p>
+<p>前置将运算对象加 1 (或减 1),
+并返回<strong>改变后</strong>的对象；后置版本将运算对象加 1 (或减 1),
+但返回<strong>改变前</strong>那个值的副本 。</p>
+<blockquote>
+<p>如果没有特别的需求，建议使用前置的版本</p>
+<p>e.g.: <code>*iter++</code>实现一个对象的遍历</p>
+</blockquote>
+<h2 id="成员访问运算符">6. 成员访问运算符</h2>
+<p>成员运算符有<strong>点运算符</strong> 和
+<strong>箭头运算符</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//这两个表达式是等价的</span><br>ptr-&gt;mem;<br>(*ptr).mem;		<span class="hljs-comment">//* 优先级低于 . 所以要加括号</span><br></code></pre></td></tr></table></figure>
+<h2 id="条件运算符">7. 条件运算符</h2>
+<p>条件运算符 <code>?:</code> 是一个三元运算符，格式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp">cond ? expr1 : expr2;<br><span class="hljs-comment">//等价形式</span><br><span class="hljs-keyword">if</span> (cond)<br>    expr1;<br><span class="hljs-keyword">else</span><br>    expr2;<br></code></pre></td></tr></table></figure>
+<h2 id="位运算符">8. 位运算符</h2>
+<p>位运算符是在二进制的层面对数据操作，以下是常用的位运算符</p>
+<figure>
+<img src="https://kinvy-images.oss-cn-beijing.aliyuncs.com/Images/image-20211224162959652.png" srcset="/img/loading.gif" lazyload alt="image-20211224162959652">
+<figcaption aria-hidden="true">image-20211224162959652</figcaption>
+</figure>
+<h2 id="sizeof-运算符">9. sizeof 运算符</h2>
+<p><code>sizeof</code>
+运算符返回一条表达式或一个类型名字所占的字节数。该运算符有两种形式</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">Sales_data data, *p; <br><span class="hljs-built_in">sizeof</span>(type);<br><span class="hljs-keyword">sizeof</span> expr; <span class="hljs-comment">// 返回expr的类型的大小，不会实际计算</span><br><span class="hljs-keyword">sizeof</span> p;    <span class="hljs-comment">// 指针所占的空间大小</span><br><span class="hljs-keyword">sizeof</span> *p;   <span class="hljs-comment">// p所指类型的空间大小 </span><br></code></pre></td></tr></table></figure>
+<h2 id="逗号运算符">10. 逗号运算符</h2>
+<p><strong>逗号运算符</strong>
+含有两个运算对象，按照从左向右的顺序依次求值</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">vector&lt;<span class="hljs-type">int</span>&gt;::size_type cnt = ivec.<span class="hljs-built_in">size</span>();<br><span class="hljs-comment">//将把从size到1的值赋给ivec的元素</span><br><span class="hljs-keyword">for</span>(vector&lt;<span class="hljs-type">int</span>&gt;::size_type ix = <span class="hljs-number">0</span>; <br>   				ix != ivec.size; ++ix, --cnt)<br>    ivec[ix] = cnt;<br></code></pre></td></tr></table></figure>
+<h2 id="类型转换">11. 类型转换</h2>
+<h4 id="隐式转换">隐式转换</h4>
+<p>由编译器完成，可能会出现精度损失</p>
+<h4 id="显示转换">显示转换</h4>
+<p>命名类型的强制类型转换，其形式如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++">cast-<span class="hljs-built_in">name</span>&lt;type&gt;(expression);<br></code></pre></td></tr></table></figure>
+<p>其中<code>type</code>是转换的目标类型而 <code>expression</code>
+是要转换的值。如果 <code>type</code> 是引用类型，则结果是左值。</p>
+<p><code>cast-name</code> 是
+<code>static_cast</code>、<code>dynamic_cast</code>、<code>const_cast</code>、<code>reinterpret_cast</code>中的一种。</p>
+<p><strong>static_cast</strong> ,
+任何具有明确定义的类型转换，只要不包含底层const，都可以使用static_cast</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//进行强制类型转换以便执行浮点数除法， j, i是int</span><br><span class="hljs-type">double</span> slope = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">double</span>&gt;(j) / i;<br></code></pre></td></tr></table></figure>
+<p><strong>const_cast</strong>, 只能改变运算对象的底层const</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">const</span> <span class="hljs-type">char</span> *pc;<br><span class="hljs-type">char</span> *p = <span class="hljs-built_in">const_cast</span>&lt;<span class="hljs-type">char</span>*&gt;(pc); <span class="hljs-comment">// 正确，但是通过p写值是未定义的行为</span><br><span class="hljs-built_in">const_cast</span>&lt;string&gt;(pc); <span class="hljs-comment">// 错误，const_cast只改变常量属性</span><br><br><span class="hljs-type">char</span> *q = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">char</span>*&gt;(pc); <span class="hljs-comment">//错误，static_cast不能转换掉const性质</span><br><span class="hljs-built_in">static_cast</span>&lt;string&gt;(pc); <span class="hljs-comment">// 正确，字符串字面值转换成string类型</span><br></code></pre></td></tr></table></figure>
+<p><strong>reinterpret_cast</strong>,
+通常为运算对象的位模式提供较低层次上的重新解释
+<em>这里不是很明白</em></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> *ip;<br><span class="hljs-type">char</span> *pc = <span class="hljs-built_in">reinterpret_cast</span>&lt;<span class="hljs-type">char</span>*&gt;(ip);<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C/" class="category-chain-item">C++</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/C-Primer/">#C++ Primer</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://example.com/2023/02/08/Ch4-表达式/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Whd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/02/08/Ch3-%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%81%E5%90%91%E9%87%8F%E5%92%8C%E6%95%B0%E7%BB%84/" title="第3章 字符串、向量和数组">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">第3章 字符串、向量和数组</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
