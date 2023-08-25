@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kingw413.github.io/2023/08/21/Ch2-%E5%8F%98%E9%87%8F%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B/基本数据类型.png">
 <meta property="article:published_time" content="2023-08-20T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-08-24T16:36:06.221Z">
+<meta property="article:modified_time" content="2023-08-25T08:17:53.680Z">
 <meta property="article:author" content="Whd">
 <meta property="article:tag" content="C++ Primer">
 <meta name="twitter:card" content="summary_large_image">
@@ -273,6 +273,14 @@
             <!-- SEO header -->
             <h1 style="display: none">第2章 变量和基本类型</h1>
             
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年8月25日 下午
+                  
+                
+              </p>
+            
             
               <div class="markdown-body">
                 
@@ -318,8 +326,7 @@ char中的一种，由编译器决定。</strong></p>
 , <code>&#123;&#125;</code></p>
 </blockquote>
 <p><strong>默认初始化</strong>
-，定义变量时没有初始化变量的值，则变量会被默认初始化。默认初始化的值取决于变量定义的类型。==定义在函数体内的局部变量和类中的成员属性是不会被初始化的==
-所以不用试图使用任何方式去访问这些变量。</p>
+，定义变量时没有初始化变量的值，则变量会被默认初始化。默认初始化的值取决于变量定义的类型。<strong>定义在函数体内的局部变量和类中的成员属性是不会被初始化的</strong>。所以不用试图使用任何方式去访问这些变量。</p>
 <h3 id="声明和定义">2.2 声明和定义</h3>
 <p><strong>声明</strong>，使程序知道变量（对象）的存在</p>
 <p><strong>定义</strong>，负责创建与名字关联的实体 </p>
@@ -330,7 +337,6 @@ char中的一种，由编译器决定。</strong></p>
 <h3 id="标识符作用域">2.3-4 标识符、作用域</h3>
 <h4 id="标识符">标识符</h4>
 <p>变量命名按照规范，不要使用保留关键字。</p>
-<p>==命名规则，供参考：==</p>
 <ul>
 <li>普通的局部变量和函数参数名使用小驼峰（第一个单词首字母小写，其他单词首字母大写），
 例： <code>userName</code></li>
@@ -418,10 +424,10 @@ r 引用的是一个指针。最后，声明的基本数据类型部分指出 r 
 <h3 id="const的引用">4.1 const的引用</h3>
 <ul>
 <li><p><strong>对常量的引用不能被用作修改它所绑定的对象</strong></p></li>
-<li><p><strong>允许为一个常量引用绑定非常量的对象、字面值，甚至是个一般表达式</strong>==此时常量引用实际上绑定了一个临时量对象==</p></li>
+<li><p><strong>允许为一个常量引用绑定非常量的对象、字面值，甚至是个一般表达式</strong>（此时常量引用实际上绑定了一个临时量对象）</p></li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> i = <span class="hljs-number">42</span>;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> j = <span class="hljs-number">10</span>;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> &amp;r1 = i;			<span class="hljs-comment">//正确，允许将 const int&amp;绑定到一个普通int对象</span><br>r1 = <span class="hljs-number">10</span>;					<span class="hljs-comment">//错误，不能通过常量引用改变i的值</span><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> &amp;r2 = <span class="hljs-number">42</span>;			<span class="hljs-comment">//正确</span><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> &amp;r3 = r1 * <span class="hljs-number">2</span>;		<span class="hljs-comment">//正确</span><br><span class="hljs-type">int</span>&amp; r4 = j;				<span class="hljs-comment">//错误</span><br><span class="hljs-type">int</span> &amp;r4 = r1 * <span class="hljs-number">2</span>;			<span class="hljs-comment">//错误</span><br></code></pre></td></tr></table></figure>
-<p>==组合关系==</p>
+<p><strong>组合关系</strong></p>
 <table>
 <thead>
 <tr class="header">
@@ -472,7 +478,7 @@ r 引用的是一个指针。最后，声明的基本数据类型部分指出 r 
 </blockquote>
 <h4 id="常量指针">常量指针</h4>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> errNumb = <span class="hljs-number">0</span>;<br><span class="hljs-type">int</span> *<span class="hljs-type">const</span> curErr = &amp;errNumb;	<span class="hljs-comment">//curErr将一直指向errNumb,不可以改变指向</span><br><span class="hljs-type">const</span> <span class="hljs-type">double</span> pi = <span class="hljs-number">3.14</span>;<br>cont <span class="hljs-type">double</span> *<span class="hljs-type">const</span> pip = &amp;pi;		<span class="hljs-comment">//pip是一个指向常量对象的常量指针</span><br>*curErr = <span class="hljs-number">1</span>;  <span class="hljs-comment">//正确，把curErr所指的对象的值设为1</span><br>*pip = <span class="hljs-number">2.72</span>;  <span class="hljs-comment">//错误，pip是一个指向常量的指针</span><br></code></pre></td></tr></table></figure>
-<p>==<strong>从右向左读</strong>==</p>
+<p><strong>从右向左读</strong></p>
 <blockquote>
 <p>C++ Primer 5th :</p>
 <p><a id="const point">常量指针</a>：
@@ -483,7 +489,7 @@ r 引用的是一个指针。最后，声明的基本数据类型部分指出 r 
 表示该变量（对象）本身是常量，不可以改变</p>
 <p><strong>底层const</strong>: 表示指向的变量（对象）是一个常量</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;<br><span class="hljs-type">int</span> *<span class="hljs-type">const</span> p1 = &amp;i;		<span class="hljs-comment">//p1是指针，p1的指向不能改变，顶层</span><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> ci = <span class="hljs-number">42</span>;		<span class="hljs-comment">//ci是普通变量，ci的值不能改变，顶层</span><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> *p2 = &amp;ci;	<span class="hljs-comment">//p2是一个指针，它必须指向 const int型的数据，但是本身的指向可以改变，底层</span><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> *<span class="hljs-type">const</span> p3 = p2;	<span class="hljs-comment">//第一个底层，第二个顶层</span><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> &amp;r = ci;			<span class="hljs-comment">//用于声明引用的const都是底层</span><br></code></pre></td></tr></table></figure>
-<p>==引用类型的变量自带顶层const==
+<p><strong>引用类型的变量自带顶层const</strong>
 即引用一旦赋值（指向某个变量）就不可以再变化（指向另一个变量）</p>
 <h3 id="constexpr和常量表达式">4.4 constexpr和常量表达式</h3>
 <p>指值不会改变并且在编译过程就能得到计算结果的表达式。</p>
@@ -523,8 +529,7 @@ r 引用的是一个指针。最后，声明的基本数据类型部分指出 r 
 <a href="#const%20point">常量指针</a> ，而并不是指向常量字符的指针</p>
 </blockquote>
 <h3 id="auto-类型说明符">5.2 auto 类型说明符</h3>
-<p><span style="border:2px solid Red">C++11</span> <code>auto</code>
-类型说明符可以让编译器分析表达式所属的类型。</p>
+<p><code>auto</code> 类型说明符可以让编译器分析表达式所属的类型。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> val1 = <span class="hljs-number">1</span>, val2 = <span class="hljs-number">3</span>;<br><span class="hljs-keyword">auto</span> val = val1 + val2;		<span class="hljs-comment">//编译器可以自动推出val为int类型</span><br><span class="hljs-keyword">auto</span> i = <span class="hljs-number">0</span>, *p = &amp;i;		<span class="hljs-comment">//正确，编译器通过字面值推出i为int,p为int*</span><br><span class="hljs-keyword">auto</span> sz = <span class="hljs-number">0</span>; pi = <span class="hljs-number">3.14</span>;		<span class="hljs-comment">//错误，编译器无法推出类型， sz， pi类型不一致无法统一</span><br></code></pre></td></tr></table></figure>
 <h4 id="复合类型常量和auto">复合类型、常量和auto</h4>
 <ul>
@@ -549,8 +554,8 @@ r 引用的是一个指针。最后，声明的基本数据类型部分指出 r 
 <p>通过 <code>f()</code> 推断出返回类型，但是并不会执行
 <code>f()</code></p>
 <h4 id="decltype-和const">decltype 和const</h4>
-<p><code>decltype</code>处理顶层 consth和引用的方式和auto有点不同，如果
-decltype使用的表达式是一个变量，则decltype返回该变量的类型（==包括顶层const和引用在内==）</p>
+<p><code>decltype</code>处理顶层 const和引用的方式和auto有点不同，如果
+decltype使用的表达式是一个变量，则decltype返回该变量的类型（包括顶层const和引用在内）</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">const</span> <span class="hljs-type">int</span> ci = <span class="hljs-number">0</span>, &amp;cj = ci;<br><span class="hljs-keyword">decltype</span>(ci) x = <span class="hljs-number">0</span>;		<span class="hljs-comment">//const int x = 0</span><br><span class="hljs-keyword">decltype</span>(cj) y = <span class="hljs-number">0</span>;		<span class="hljs-comment">//const int &amp;y = 0;</span><br><span class="hljs-keyword">decltype</span>(cj) z;			<span class="hljs-comment">//错误， const int &amp;z;  引用必须初始化</span><br></code></pre></td></tr></table></figure>
 <h4 id="decltype-和引用">decltype 和引用</h4>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> i = <span class="hljs-number">42</span>, *p = &amp;i, &amp;r = i;<br><span class="hljs-keyword">decltype</span>(r + <span class="hljs-number">0</span>) b;		<span class="hljs-comment">//int b;</span><br><span class="hljs-keyword">decltype</span>(*p) c;			<span class="hljs-comment">//错误， int &amp;c; 引用需要初始化</span><br></code></pre></td></tr></table></figure>
@@ -562,7 +567,6 @@ decltype使用的表达式是一个变量，则decltype返回该变量的类型�
 </blockquote>
 <p>变量加上 <code>()</code> 得到的是引用类型</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">decltype</span>((i)) d;   	<span class="hljs-comment">//错误， int&amp; d; 引用类型需要初始化</span><br><span class="hljs-keyword">decltype</span>(i) e;		<span class="hljs-comment">// int e;</span><br></code></pre></td></tr></table></figure>
-<p>==<code>decltype((variable))</code> 的结果永远是引用==</p>
 <h2 id="自定义数据结构">6. 自定义数据结构</h2>
 <p>这里的自定义数据结构就是指类类型的数据，在C++中定义类的关键字有<code>class</code>
 和 <code>struct</code></p>
