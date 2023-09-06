@@ -4,6 +4,70 @@
   
   
   <entry>
+    <title>AFIRM: Adaptive forwarding based link recovery for mobility support in NDN/IoT networks</title>
+    <link href="/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/"/>
+    <url>/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/</url>
+    
+    <content type="html"><![CDATA[<h2 style="color: #1B5E20"><span style="background-color: #f1f8e9">💡 Meta Data</span></h2><table><tr><th style="background-color: #dbeedd">Title</th><td style="background-color: #dbeedd">AFIRM: Adaptive forwarding based link recovery for mobility support inNDN/IoT networks</td></tr><tr><th style="background-color: #f3faf4">Journal</th><td style="background-color: #f3faf4">Future Generation Computer Systems</td></tr><tr><th style="background-color: #dbeedd">Authors</th><td style="background-color: #dbeedd">Maroua Meddeb; Amine Dhraief; Abdelfettah Belghith; Thierry Monteil;Khalil Drira; Sofien Gannouni</td></tr><tr><th style="background-color: #f3faf4">Pub. date</th><td style="background-color: #f3faf4">2018-10-01</td></tr><tr><th style="background-color: #dbeedd">期刊标签</th><td style="background-color: #dbeedd"><span style="color: rgb(187, 91, 17)">CCF C</span></td></tr><tr><th style="background-color: #f3faf4">DOI</th><td style="background-color: #f3faf4"><a href="https://doi.org/10.1016/j.future.2018.04.087" rel="noopener noreferrer nofollow">10.1016/j.future.2018.04.087</a></td></tr><tr><th style="background-color: #dbeedd">附件</th><td style="background-color: #dbeedd"><a href="zotero://open-pdf/0_X3ZVFIKW" rel="noopener noreferrer nofollow">🔗2018_Meddeb_AFIRM.pdf</a></td></tr></table><p>两种移动性：</p><ul><li>consumer mobility：只会引起数据包的丢失（类似于反向路径失效）</li><li>producer mobility：会导致兴趣包的迷路（无法获得数据）</li></ul><p>解决producer mobility的四类方法：</p><ul><li><strong>location-based</strong>：依赖于额外的实体来维护内容名称与其位置之间的映射</li><li><strong>locator/identifierseparation</strong>：在命名方案中添加了定位器前缀</li><li><strong>triangular</strong>：更新producer的旧位置到新位置的路径</li><li><strong>routing-based</strong>：使用动态路由算法，将请求路由到正确的新位置</li></ul><blockquote><p>triangular和routing-based的不同：前者由移动后的producer触发请求，以更新新位置至原位置的路径(即节点的FIB)；后者则更新新位置至consumer的一条最优新路径。</p><p>并且，triangular一般只支持intra-AS的小范围移动，routing-based则都可以支持。</p></blockquote><p><img src="/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/1693983884834.png"></p><h2 id="研究内容"><span style="color: #2E7D32"><span style="background-color: #f1f8e9">📊 研究内容</span></span></h2><h3 id="核心">核心：</h3><p><strong>旨在通过在检测到移动后更新转发信息来恢复请求路径。它的目标是减少数据包丢失与一个非昂贵的解决方案方面的信令通信开销。</strong>（针对的是producermobility)</p><p>由两个阶段完成：</p><h3 id="fibs-construction">FIBs construction</h3><p>利用泛洪探索网络，并记录在FIB中，同时包括Data包的传入传出接口。迭代删除完整名称的最后一个组件，以添加新条目，删除可从多个端口满足的子前缀条目，如图中的,。</p><figure><img src="/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/FIBs.png" alt="FIBs construction过程"><figcaption aria-hidden="true">FIBs construction过程</figcaption></figure><h3 id="link-recovery">Link recovery</h3><p>使用<strong>keep-alive movement detectionmethod</strong>，网关定期发送ping消息，以检查传感器是否仍然连接。每个网关处理其连接的传感器的移动性。当检测到连接失效时，旧位置、新位置以及其它节点均需做出反应。由带有flag=0/1的RECOVERY包指示，分别删除旧位置的FIB条目，为新位置添加FIB条目。如下图所示：</p><figure><img src="/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/链路恢复.png" alt="链路恢复"><figcaption aria-hidden="true">链路恢复</figcaption></figure><h2 id="研究结论"><span style="color: #4A148C"><span style="background-color: #f5f5f5">🚩 研究结论</span></span></h2><p>AFIRM是一种用于NDN架构的<strong>内容驱动、自适应转发和完全分布式</strong>的算法。其可以在支持生产者移动性的同时，显著<strong>降低信令成本</strong>。</p><p>AFIRM的成本低于COBRA。这两种解决方案删除错误转发信息的成本几乎相同，但要添加新的转发信息，<strong>AFIRM会在上游进行，而COBRA会在下游添加信息</strong>。通过向消费者靠拢，中间节点给出了更精确的转发决策，从而在FIB中缺乏信息的情况下，可以避免洪泛。</p><h2 id="感想-疑问"><span style="color: #006064"><span style="background-color: #e0f7fa">❓ 感想 &amp; 疑问</span></span></h2><p>网关定期与连接的传感器发送ping以确认连接，这引起的开销是可接受的么？</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>论文阅读</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>NDN</tag>
+      
+      <tag>Ad hoc</tag>
+      
+      <tag>转发</tag>
+      
+      <tag>可靠传输</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>CCLF(基于内容连接度和位置感知的自适应转发)</title>
+    <link href="/2023/09/06/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/20230415-CCLF/"/>
+    <url>/2023/09/06/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/20230415-CCLF/</url>
+    
+    <content type="html"><![CDATA[<h2 id="information">Information:</h2><ol type="1"><li>Title: Leveraging Content Connectivity and Location Awareness forAdaptive Forwarding in NDN-based Mobile Ad Hoc Networks(基于内容连接性和位置感知的NDN移动自组织网络自适应转发技术)</li><li>Authors: Muktadir Chowdhury, Junaid Ahmed Khan, and Lan Wang</li><li>Affiliation: University of Memphis (孟菲斯大学)</li><li>Keywords: Named Data Networking, MANET, routing, forwarding(命名数据网络，移动自组织网络，路由，转发)</li><li>Urls: Paper link: https://dl.acm.org/doi/10.1145/3405656.3418713,Github: None.</li></ol><h2 id="summary">Summary:</h2><ul><li>(1):本文研究了移动自组织网络（MANETs）中的数据转发问题，提出了基于命名数据网络（NDN）的内容连接性和位置感知的自适应转发策略。</li><li>(2):传统的MANET转发策略在高度动态的网络中很难有效转发数据，并且在存在连接变化时通常需要大量控制报文来获取拓扑信息。本文提出的方法是<strong>基于内容连接性和位置信息</strong>对数据进行转发，避免了控制报文的开销，并且通过在网络层维护转发状态和期望转发反馈来加强转发策略的适应性。</li><li>(3): 文中提出了一个自适应转发策略——Content Connectivity andLocation-Aware Forwarding(CCLF)，在NDN网络中进行转发时基于内容连接性和位置信息，避免了控制报文和数据报文之间的不一致，并且通过减少无效广播来提升转发性能。此外还提出了适用于MANET网络的链路自适应层（A-LAL）以增强链路的灵活性和可靠性。</li><li>(4):研究结果表明，CCLF能够有效降低数据转发的负载并保证数据的可靠获取，在信息中心化车联网方案中也比其他转发策略表现更为优异，验证了其在移动自组织网络中的有效性。</li></ul><h2 id="method">Method:</h2><p>CCLF广播NDN数据包，让每个节点根据每个前缀的内容连接度和任何可用的地理位置信息独立地决定是否转发数据包；此外，它采用密度感知的抑制机制来减少不必要的包传输；此外，为adhoc链路开发了链路适配层，以弥合CCLF与底层链路能力之间的差距。</p><h3 id="内容连接度">内容连接度</h3><p>内容连接度是<strong>细粒度</strong>的，区分于以往基于节点的整体兴趣满意度来量化节点的连通性，CCLF对<strong>每一个名称前缀</strong>分别计算一个内容连通性分数(ContentConnectivity Score, CCS)。</p><blockquote><p>This fine-grained measure of forwarding performance helps the networklayer make more informed decisions when forwarding Interests to retrievedata from different producers.</p></blockquote><p>CCS计算公式： <span class="math display">\[CCS_j = \frac{D_j+\sum_{i\in Desc(j)}D_i}{I_j+\sum_{i\in Desc(j)}I_i}\]</span> <span class="math inline">\(D_j,I_j\)</span>分别表示对应前缀<span class="math inline">\(j\)</span>的Data、Interest个数，<span class="math inline">\(Desc(j)\)</span>表示前缀<span class="math inline">\(j\)</span>的子类的集合。</p><p>CCS周期性更新，根据指数加权移动平均(EWMA): <span class="math display">\[\widehat{CCS}_{i,N}=\alpha \cdot CCS_{i,N}+(1-\alpha) \cdot\widehat{CCS}_{i,N-1}\]</span></p><h3 id="地理位置">地理位置</h3><p>地理位置在CCLF中作为<strong>可选项</strong>使用，Consumer可以将数据的位置附加到Interest中（<em>通过NDNLP header</em>）,节点接收到此类Interest后，计算位置分数（LocationScore,LS）: <span class="math display">\[LS = 1- \frac{Dist(n,d)}{max(Dist(n,d),Dist(p,d))}\]</span> <span class="math inline">\(p,n,d\)</span>分别代表上一跳、当前、目的节点。</p><p>CCS和位置信息通过新设定的C-L tree结构来储存、更新与检索： <img src="/2023/09/06/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/20230415-CCLF/1681475432881.png" alt="C-L tree"></p><h3 id="转发计时器">转发计时器</h3><p>和其他策略类似，当某个节点通过其广播链路发送Interest后，传输范围内的其他节点分布式决定<strong>是否以及何时</strong>转发该兴趣。首先对CCS和LS加权： <span class="math display">\[w = \beta \cdot \widehat{CCS} + (1-\beta) \cdot LS\]</span> 再取倒数计算基本的定时器时间t: <span class="math display">\[t= \begin{cases}\min \left(\frac{1}{w}, T\right), &amp; \text { if }w&gt;0 \\ T, &amp; \text { if } w=0\end{cases}\]</span> T为t的一个上界，最终定时器的值在<span class="math inline">\(0.5t-1.5t\)</span>之间随机选取。</p><h3 id="密度感知的转发抑制">密度感知的转发抑制</h3><p>当节点在某个Interest的转发计时器到期之前收到相同Interest时，它使用一个<strong>与其邻居数量成正比的抑制概率</strong>来决定是否取消自己的兴趣转发：<span class="math display">\[p=min(K \cdot n, 1)\]</span><em>Data包也采用相同的概率抑制方案，不过在Data包转发中，节点的Timer值是相同的。</em></p><h3 id="ad-hoc链路适配层">AD-HOC链路适配层</h3><p>开发了新的一个Ad-hoc Link AdaptationLayer(A-LAL)层面，为CCLF提供一些重要操作：</p><figure><img src="/2023/09/06/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/20230415-CCLF/1681479229022.png" alt="A-LAL"><figcaption aria-hidden="true">A-LAL</figcaption></figure><ul><li>在Interes包中添加NDNLP头(previous hop location和data location)</li><li>利用MAC层的信息来跟踪邻居节点的数量(Neighbor-List)，以支持转发抑制概率的计算</li><li>没有邻居节点时，存储包(PacketQueue)直至发现邻居</li></ul><p>最后，总的转发流程伪代码如下： <img src="/2023/09/06/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/20230415-CCLF/1681480197163.png" alt="Interest转发"></p><figure><img src="/2023/09/06/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/20230415-CCLF/1681480213422.png" alt="Data包转发"><figcaption aria-hidden="true">Data包转发</figcaption></figure><h2 id="conclusion">Conclusion:</h2><ul><li>(1):本文提出了一种基于内容连接性和位置感知的自适应转发策略，CCLF，用于解决移动自组织网络（MANETs）中的数据转发问题，具有实际应用价值。</li><li>(2):创新点：本文提出的CCLF算法在转发决策中加入了内容连接性和位置信息，可以有效地避免控制报文开销和数据报文不一致问题，并减少无效广播，具有较高的性能表现。但是本文研究还存在一定的局限性，需要进一步拓展研究范围，对算法的参数调整及不同情境的适用性进行更深入的研究，并进行更全面的评估测试。</li><li>性能：CCLF相较于传统的转发策略，在满足数据转发的负载要求的同时减少了数据转发的开销，具有较高的性能表现。</li><li>工作量：本文的研究范围相对狭窄，需要进一步的实验和评估工作以证明其普适性和适用性。</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>论文阅读</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>NDN</tag>
+      
+      <tag>Ad hoc</tag>
+      
+      <tag>转发</tag>
+      
+      <tag>地理位置</tag>
+      
+      <tag>可靠性</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>第10章 泛型算法</title>
     <link href="/2023/09/05/Ch10-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/"/>
     <url>/2023/09/05/Ch10-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/</url>
@@ -221,39 +285,6 @@
     <tags>
       
       <tag>C++ Primer</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>CCLF(基于内容连接度和位置感知的自适应转发)</title>
-    <link href="/2023/04/15/20230415-CCLF/"/>
-    <url>/2023/04/15/20230415-CCLF/</url>
-    
-    <content type="html"><![CDATA[<h2 id="information">Information:</h2><ol type="1"><li>Title: Leveraging Content Connectivity and Location Awareness forAdaptive Forwarding in NDN-based Mobile Ad Hoc Networks(基于内容连接性和位置感知的NDN移动自组织网络自适应转发技术)</li><li>Authors: Muktadir Chowdhury, Junaid Ahmed Khan, and Lan Wang</li><li>Affiliation: University of Memphis (孟菲斯大学)</li><li>Keywords: Named Data Networking, MANET, routing, forwarding(命名数据网络，移动自组织网络，路由，转发)</li><li>Urls: Paper link: https://dl.acm.org/doi/10.1145/3405656.3418713,Github: None.</li></ol><h2 id="summary">Summary:</h2><ul><li>(1):本文研究了移动自组织网络（MANETs）中的数据转发问题，提出了基于命名数据网络（NDN）的内容连接性和位置感知的自适应转发策略。</li><li>(2):传统的MANET转发策略在高度动态的网络中很难有效转发数据，并且在存在连接变化时通常需要大量控制报文来获取拓扑信息。本文提出的方法是<strong>基于内容连接性和位置信息</strong>对数据进行转发，避免了控制报文的开销，并且通过在网络层维护转发状态和期望转发反馈来加强转发策略的适应性。</li><li>(3): 文中提出了一个自适应转发策略——Content Connectivity andLocation-Aware Forwarding(CCLF)，在NDN网络中进行转发时基于内容连接性和位置信息，避免了控制报文和数据报文之间的不一致，并且通过减少无效广播来提升转发性能。此外还提出了适用于MANET网络的链路自适应层（A-LAL）以增强链路的灵活性和可靠性。</li><li>(4):研究结果表明，CCLF能够有效降低数据转发的负载并保证数据的可靠获取，在信息中心化车联网方案中也比其他转发策略表现更为优异，验证了其在移动自组织网络中的有效性。</li></ul><h2 id="method">Method:</h2><p>CCLF广播NDN数据包，让每个节点根据每个前缀的内容连接度和任何可用的地理位置信息独立地决定是否转发数据包；此外，它采用密度感知的抑制机制来减少不必要的包传输；此外，为adhoc链路开发了链路适配层，以弥合CCLF与底层链路能力之间的差距。</p><h3 id="内容连接度">内容连接度</h3><p>内容连接度是<strong>细粒度</strong>的，区分于以往基于节点的整体兴趣满意度来量化节点的连通性，CCLF对<strong>每一个名称前缀</strong>分别计算一个内容连通性分数(ContentConnectivity Score, CCS)。</p><blockquote><p>This fine-grained measure of forwarding performance helps the networklayer make more informed decisions when forwarding Interests to retrievedata from different producers.</p></blockquote><p>CCS计算公式： <span class="math display">\[CCS_j = \frac{D_j+\sum_{i\in Desc(j)}D_i}{I_j+\sum_{i\in Desc(j)}I_i}\]</span> <span class="math inline">\(D_j,I_j\)</span>分别表示对应前缀<span class="math inline">\(j\)</span>的Data、Interest个数，<span class="math inline">\(Desc(j)\)</span>表示前缀<span class="math inline">\(j\)</span>的子类的集合。</p><p>CCS周期性更新，根据指数加权移动平均(EWMA): <span class="math display">\[\widehat{CCS}_{i,N}=\alpha \cdot CCS_{i,N}+(1-\alpha) \cdot\widehat{CCS}_{i,N-1}\]</span></p><h3 id="地理位置">地理位置</h3><p>地理位置在CCLF中作为<strong>可选项</strong>使用，Consumer可以将数据的位置附加到Interest中（<em>通过NDNLP header</em>）,节点接收到此类Interest后，计算位置分数（LocationScore,LS）: <span class="math display">\[LS = 1- \frac{Dist(n,d)}{max(Dist(n,d),Dist(p,d))}\]</span> <span class="math inline">\(p,n,d\)</span>分别代表上一跳、当前、目的节点。</p><p>CCS和位置信息通过新设定的C-L tree结构来储存、更新与检索： <img src="/2023/04/15/20230415-CCLF/1681475432881.png" alt="C-L tree"></p><h3 id="转发计时器">转发计时器</h3><p>和其他策略类似，当某个节点通过其广播链路发送Interest后，传输范围内的其他节点分布式决定<strong>是否以及何时</strong>转发该兴趣。首先对CCS和LS加权： <span class="math display">\[w = \beta \cdot \widehat{CCS} + (1-\beta) \cdot LS\]</span> 再取倒数计算基本的定时器时间t: <span class="math display">\[t= \begin{cases}\min \left(\frac{1}{w}, T\right), &amp; \text { if }w&gt;0 \\ T, &amp; \text { if } w=0\end{cases}\]</span> T为t的一个上界，最终定时器的值在<span class="math inline">\(0.5t-1.5t\)</span>之间随机选取。</p><h3 id="密度感知的转发抑制">密度感知的转发抑制</h3><p>当节点在某个Interest的转发计时器到期之前收到相同Interest时，它使用一个<strong>与其邻居数量成正比的抑制概率</strong>来决定是否取消自己的兴趣转发：<span class="math display">\[p=min(K \cdot n, 1)\]</span><em>Data包也采用相同的概率抑制方案，不过在Data包转发中，节点的Timer值是相同的。</em></p><h3 id="ad-hoc链路适配层">AD-HOC链路适配层</h3><p>开发了新的一个Ad-hoc Link AdaptationLayer(A-LAL)层面，为CCLF提供一些重要操作：</p><figure><img src="/2023/04/15/20230415-CCLF/1681479229022.png" alt="A-LAL"><figcaption aria-hidden="true">A-LAL</figcaption></figure><ul><li>在Interes包中添加NDNLP头(previous hop location和data location)</li><li>利用MAC层的信息来跟踪邻居节点的数量(Neighbor-List)，以支持转发抑制概率的计算</li><li>没有邻居节点时，存储包(PacketQueue)直至发现邻居</li></ul><p>最后，总的转发流程伪代码如下： <img src="/2023/04/15/20230415-CCLF/1681480197163.png" alt="Interest转发"></p><figure><img src="/2023/04/15/20230415-CCLF/1681480213422.png" alt="Data包转发"><figcaption aria-hidden="true">Data包转发</figcaption></figure><h2 id="conclusion">Conclusion:</h2><ul><li>(1):本文提出了一种基于内容连接性和位置感知的自适应转发策略，CCLF，用于解决移动自组织网络（MANETs）中的数据转发问题，具有实际应用价值。</li><li>(2):创新点：本文提出的CCLF算法在转发决策中加入了内容连接性和位置信息，可以有效地避免控制报文开销和数据报文不一致问题，并减少无效广播，具有较高的性能表现。但是本文研究还存在一定的局限性，需要进一步拓展研究范围，对算法的参数调整及不同情境的适用性进行更深入的研究，并进行更全面的评估测试。</li><li>性能：CCLF相较于传统的转发策略，在满足数据转发的负载要求的同时减少了数据转发的开销，具有较高的性能表现。</li><li>工作量：本文的研究范围相对狭窄，需要进一步的实验和评估工作以证明其普适性和适用性。</li></ul>]]></content>
-    
-    
-    <categories>
-      
-      <category>论文阅读</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>NDN</tag>
-      
-      <tag>Ad hoc</tag>
-      
-      <tag>转发</tag>
-      
-      <tag>地理位置</tag>
-      
-      <tag>可靠性</tag>
       
     </tags>
     

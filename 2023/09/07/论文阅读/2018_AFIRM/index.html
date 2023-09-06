@@ -16,22 +16,29 @@
   <meta name="author" content="Whd">
   <meta name="keywords" content="">
   
-    <meta name="description" content="顺序容器定义的操作很少，因此标准库定义了一组泛型算法，可以用于不同类型的容器和不同类型的元素。">
+    <meta name="description" content="AFIRM是一种用于NDN架构的内容驱动、自适应转发和完全分布式的算法，其可以在支持生产者移动性的同时，显著降低信令成本。主要通过移动点的下行通知来更新FIB，是一种routing-based的方案。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第10章 泛型算法">
-<meta property="og:url" content="https://kingw413.github.io/2023/09/05/Ch10-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:title" content="AFIRM: Adaptive forwarding based link recovery for mobility support in NDN&#x2F;IoT networks">
+<meta property="og:url" content="https://kingw413.github.io/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="顺序容器定义的操作很少，因此标准库定义了一组泛型算法，可以用于不同类型的容器和不同类型的元素。">
+<meta property="og:description" content="AFIRM是一种用于NDN架构的内容驱动、自适应转发和完全分布式的算法，其可以在支持生产者移动性的同时，显著降低信令成本。主要通过移动点的下行通知来更新FIB，是一种routing-based的方案。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-09-05T13:43:53.403Z">
-<meta property="article:modified_time" content="2023-08-31T15:10:45.000Z">
+<meta property="og:image" content="https://kingw413.github.io/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/1693983884834.png">
+<meta property="og:image" content="https://kingw413.github.io/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/FIBs.png">
+<meta property="og:image" content="https://kingw413.github.io/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/链路恢复.png">
+<meta property="article:published_time" content="2023-09-06T16:11:44.621Z">
+<meta property="article:modified_time" content="2023-09-06T16:29:26.521Z">
 <meta property="article:author" content="Whd">
-<meta property="article:tag" content="C++ Primer">
+<meta property="article:tag" content="NDN">
+<meta property="article:tag" content="Ad hoc">
+<meta property="article:tag" content="转发">
+<meta property="article:tag" content="可靠传输">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://kingw413.github.io/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/1693983884834.png">
   
   
   
-  <title>第10章 泛型算法 - Hexo</title>
+  <title>AFIRM: Adaptive forwarding based link recovery for mobility support in NDN/IoT networks - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -197,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="第10章 泛型算法"></span>
+            <span id="subtitle" data-typed-text="AFIRM: Adaptive forwarding based link recovery for mobility support in NDN/IoT networks"></span>
           
         </div>
 
@@ -208,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-09-05 21:43" pubdate>
-          2023年9月5日 晚上
+        <time datetime="2023-09-07 00:11" pubdate>
+          2023年9月7日 凌晨
         </time>
       </span>
     
@@ -220,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k 字
+          1.3k 字
         
       </span>
     
@@ -231,7 +238,7 @@
         
         
         
-          17 分钟
+          12 分钟
         
       </span>
     
@@ -269,12 +276,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">第10章 泛型算法</h1>
+            <h1 style="display: none">AFIRM: Adaptive forwarding based link recovery for mobility support in NDN/IoT networks</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年8月31日 晚上
+                    本文最后更新于：2023年9月7日 凌晨
                   
                 
               </p>
@@ -282,58 +289,104 @@
             
               <div class="markdown-body">
                 
-                <h1 id="第10章-泛型算法">第10章 泛型算法</h1>
-<p>”算法“：实现了一些经典算法的公共接口，如排序和搜索。</p>
-<p>”泛型”：可以用于不同类型的元素和多种容器类型。</p>
-<h2 id="初识">1 初识</h2>
-<p>除了少数例外，标准库算法都对一个范围内的元素进行操作，称其为“输入范围”。接受输入范围的算法总是使用前两个参数来表示此范围，两个参数分别是指向要处理的第一个元素和尾元素之后位置的迭代器。</p>
+                <h2 style="color: #1B5E20">
+<span style="background-color: #f1f8e9">💡 Meta Data</span>
+</h2>
+<table>
+<tr>
+<th style="background-color: #dbeedd">
+Title
+</th>
+<td style="background-color: #dbeedd">
+AFIRM: Adaptive forwarding based link recovery for mobility support in
+NDN/IoT networks
+</td>
+</tr><tr>
+<th style="background-color: #f3faf4">
+Journal
+</th>
+<td style="background-color: #f3faf4">
+Future Generation Computer Systems
+</td>
+</tr><tr>
+<th style="background-color: #dbeedd">
+Authors
+</th>
+<td style="background-color: #dbeedd">
+Maroua Meddeb; Amine Dhraief; Abdelfettah Belghith; Thierry Monteil;
+Khalil Drira; Sofien Gannouni
+</td>
+</tr><tr>
+<th style="background-color: #f3faf4">
+Pub. date
+</th>
+<td style="background-color: #f3faf4">
+2018-10-01
+</td>
+</tr><tr>
+<th style="background-color: #dbeedd">
+期刊标签
+</th>
+<td style="background-color: #dbeedd">
+<span style="color: rgb(187, 91, 17)">CCF C</span>
+</td>
+</tr><tr>
+<th style="background-color: #f3faf4">
+DOI
+</th>
+<td style="background-color: #f3faf4">
+<a target="_blank" href="https://doi.org/10.1016/j.future.2018.04.087" rel="noopener noreferrer nofollow noopener">10.1016/j.future.2018.04.087</a>
+</td>
+</tr><tr>
+<th style="background-color: #dbeedd">
+附件
+</th>
+<td style="background-color: #dbeedd">
+<a href="zotero://open-pdf/0_X3ZVFIKW" rel="noopener noreferrer nofollow">🔗2018_Meddeb_AFIRM.pdf</a>
+</td>
+</tr>
+</table>
+<p>两种移动性：</p>
+<ul>
+<li>consumer mobility：只会引起数据包的丢失（类似于反向路径失效）</li>
+<li>producer mobility：会导致兴趣包的迷路（无法获得数据）</li>
+</ul>
+<p>解决producer mobility的四类方法：</p>
+<ul>
+<li><strong>location-based</strong>：依赖于额外的实体来维护内容名称与其位置之间的映射</li>
+<li><strong>locator/identifier
+separation</strong>：在命名方案中添加了定位器前缀</li>
+<li><strong>triangular</strong>：更新producer的旧位置到新位置的路径</li>
+<li><strong>routing-based</strong>：使用动态路由算法，将请求路由到正确的新位置</li>
+</ul>
 <blockquote>
-<p>算法永远不会改变底层容器的大小。算法本身不会执行容器的操作，它们只会运行于迭代器之上，执行迭代器的操作。</p>
+<p>triangular和routing-based的不同：前者由移动后的producer触发请求，以更新新位置至原位置的路径(即节点的FIB)；后者则更新新位置至consumer的一条最优新路径。</p>
+<p>并且，triangular一般只支持intra-AS的小范围移动，routing-based则都可以支持。</p>
 </blockquote>
-<h3 id="只读算法">1.1 只读算法</h3>
-<p>只读取其输入范围内的元素，而不改变元素。</p>
-<p><code>accumulate(vec.begin(), vec.end(), 0)</code>：求和函数</p>
-<blockquote>
-<p>accumulate的第三个参数的类型决定了函数中使用哪个加法运算符以及返回值的类型。</p>
-</blockquote>
-<p><code>equal(vec1.cbegin(), vec1.cend(), vec2.cbegin())</code>：相等函数</p>
-<blockquote>
-<p>equal假定第二个序列不比第一个序列短。<strong>那些只接受一个单一迭代器来表示第二个序列的算法，都假定第二个序列不短于第一个序列</strong></p>
-</blockquote>
-<h3 id="写容器元素的算法">1.2 写容器元素的算法</h3>
-<p><strong>算法不检查写操作</strong></p>
-<p>一些算法将新值赋予序列中的元素。当我们使用这类算法时，必须注意确保序列原大小不小于我们要求算法写入的元素数目。因为算法本身并不检查写操作，且其自身不可能改变容器的大小。</p>
-<p><code>fill_n(dest, n, val)</code>函数接受一个迭代器、一个计数值和一个值。它将给定值赋予迭代器指向的元素开始的指定个元素。其假定写入指定个元素是安全的：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++">vector&lt;<span class="hljs-type">int</span>&gt; vec;  <span class="hljs-comment">// 空向量</span><br><span class="hljs-comment">// 错误，修改vec中的10个不存在的元素</span><br><span class="hljs-built_in">fill_n</span>(vec.<span class="hljs-built_in">begin</span>(), vec.<span class="hljs-built_in">size</span>(), <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
-<h5 id="插入迭代器"><strong>插入迭代器</strong></h5>
-<p>一种保证算法有足够元素空间来容纳输出数据的方法是使用插入迭代器。插入迭代器是一种向容器中添加元素的迭代器。通常情况，当我们通过一个
-迭代器向容器元素赋值时，值被赋予迭代器指向的元素。而当我们通过一个插入迭代器赋值时，一个与赋值号右侧值相等的元素被添加到容器中。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++">vector&lt;<span class="hljs-type">int</span>&gt; vec; <br><span class="hljs-keyword">auto</span> it = <span class="hljs-built_in">back_inserter</span>(vec); <br>*it = <span class="hljs-number">42</span>; <span class="hljs-comment">// vec中现在有一个元素，值为42</span><br><span class="hljs-built_in">fill_n</span>(<span class="hljs-built_in">back_inserter</span>(vec), <span class="hljs-number">10</span>, <span class="hljs-number">0</span>); <span class="hljs-comment">// 添加10个0到vec的末尾</span><br></code></pre></td></tr></table></figure>
-<h5 id="拷贝算法"><strong>拷贝算法</strong></h5>
-<p>拷贝算法是另一个向目的位置迭代器指向的输出序列中的元素写入数据的算法。其接受三个迭代器，前两个表示一个输入范围，第三个表示目的序列的起始位置。<strong>传递给copy的目的序列至少要包含与输入序列一样多的元素</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> a1[] = &#123;<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>&#125;;<br><span class="hljs-type">int</span> a2[<span class="hljs-built_in">sizeof</span>(a1)/<span class="hljs-built_in">sizeof</span>(*a1)];  <span class="hljs-comment">// a2与a1大小一样</span><br><span class="hljs-keyword">auto</span> ret = <span class="hljs-built_in">copy</span>(<span class="hljs-built_in">begin</span>(a1), <span class="hljs-built_in">end</span>(a1), a2); <span class="hljs-comment">// 把a1的内容拷贝给a2</span><br></code></pre></td></tr></table></figure>
-<h3 id="重排容器元素的算法">1.3 重排容器元素的算法</h3>
-<p>某些算法会重排容器中元素的顺序，一个明显的例子是sort。假定己有一个
-vector, 保存了多个单词，现化简这个vector，使得每个单词只出现一次。</p>
-<p>输入：<code>the quick red fox jumps over the slow red turtle</code></p>
-<p>目标输出：<code>fox jumps over quick red slow the turtle</code></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">elimDups</span><span class="hljs-params">(vector&lt;string&gt; &amp;words)</span> </span>&#123;<br>    <span class="hljs-built_in">sort</span>(words.<span class="hljs-built_in">begin</span>(), words.<span class="hljs-built_in">end</span>());<br>    <span class="hljs-keyword">auto</span> end_unique = <span class="hljs-built_in">unique</span>(words.<span class="hljs-built_in">begin</span>(), words.<span class="hljs-built_in">end</span>());<br>    words.<span class="hljs-built_in">erase</span>(end_unique, words.<span class="hljs-built_in">end</span>());<br>&#125;<br></code></pre></td></tr></table></figure>
-<h5 id="消除重复单词">消除重复单词</h5>
-<p>完成sort后，words的顺序如下：</p>
-<p><code>fox jumps over quick red red slow the the turtle</code></p>
-<h6 id="使用unique">使用unique</h6>
-<p>unique算法重排输入序列，将相邻的重复项“消除”，并<strong>返回一个指向不重复值范围末尾的迭代器</strong>。调用unique后，vector将变成：</p>
-<p><code>fox jumps over quick red slow the turtle ??? ???</code></p>
-<p>words的大小并未改变，它仍有10个元素。但这些元素的顺序改变了——相邻的重复元素被<strong>“删除”</strong>了。我们将删除打引号是因为
-unique
-并不真的删除任何元素，<strong>它只是覆盖相邻的重复元素</strong>，使得不重复元素出现在序列开始部分。unique
-返回的迭代器指向最后一个不重复元素之后的位置。<strong>此位置之后的元素仍然存在，但我们不知道它们的值是什么</strong>。</p>
-<blockquote>
-<p>标准库算法对迭代器而不是容器进行操作。因此，算法不能（直接）添加或删除元素。</p>
-</blockquote>
-<h6 id="使用容器操作删除元素">使用容器操作删除元素</h6>
-<p>为了真正地删除无用元素，必须使用容器操作。使用erase删除从end_unique开始直至words末尾的范围内的所有元素。值得注意的是，即使
-words 中没有重复单词，这样调用 erase 也是安全的。</p>
+<p><img src="/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/1693983884834.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="研究内容"><span style="color: #2E7D32"><span style="background-color: #f1f8e9">📊 研究内容</span></span></h2>
+<h3 id="核心">核心：</h3>
+<p><strong>旨在通过在检测到移动后更新转发信息来恢复请求路径。它的目标是减少数据包丢失与一个非昂贵的解决方案方面的信令通信开销。</strong>（针对的是producer
+mobility)</p>
+<p>由两个阶段完成：</p>
+<h3 id="fibs-construction">FIBs construction</h3>
+<p>利用泛洪探索网络，并记录在FIB中，同时包括Data包的传入传出接口。迭代删除完整名称的最后一个组件，以添加新条目，删除可从多个端口满足的子前缀条目，如图中的,。</p>
+<figure>
+<img src="/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/FIBs.png" srcset="/img/loading.gif" lazyload alt="FIBs construction过程">
+<figcaption aria-hidden="true">FIBs construction过程</figcaption>
+</figure>
+<h3 id="link-recovery">Link recovery</h3>
+<p>使用<strong>keep-alive movement detection
+method</strong>，网关定期发送ping消息，以检查传感器是否仍然连接。每个网关处理其连接的传感器的移动性。当检测到连接失效时，旧位置、新位置以及其它节点均需做出反应。由带有flag=0/1的RECOVERY包指示，分别删除旧位置的FIB条目，为新位置添加FIB条目。如下图所示：</p>
+<figure>
+<img src="/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/链路恢复.png" srcset="/img/loading.gif" lazyload alt="链路恢复">
+<figcaption aria-hidden="true">链路恢复</figcaption>
+</figure>
+<h2 id="研究结论"><span style="color: #4A148C"><span style="background-color: #f5f5f5">🚩 研究结论</span></span></h2>
+<p>AFIRM是一种用于NDN架构的<strong>内容驱动、自适应转发和完全分布式</strong>的算法。其可以在支持生产者移动性的同时，显著<strong>降低信令成本</strong>。</p>
+<p>AFIRM的成本低于COBRA。这两种解决方案删除错误转发信息的成本几乎相同，但要添加新的转发信息，<strong>AFIRM会在上游进行，而COBRA会在下游添加信息</strong>。通过向消费者靠拢，中间节点给出了更精确的转发决策，从而在FIB中缺乏信息的情况下，可以避免洪泛。</p>
+<h2 id="感想-疑问"><span style="color: #006064"><span style="background-color: #e0f7fa">❓ 感想 &amp; 疑问</span></span></h2>
+<p>网关定期与连接的传感器发送ping以确认连接，这引起的开销是可接受的么？</p>
 
                 
               </div>
@@ -352,7 +405,7 @@ words 中没有重复单词，这样调用 erase 也是安全的。</p>
     
       <span class="category-chain">
         
-  <a href="/categories/C/" class="category-chain-item">C++</a>
+  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="category-chain-item">论文阅读</a>
   
   
 
@@ -367,7 +420,13 @@ words 中没有重复单词，这样调用 erase 也是安全的。</p>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/C-Primer/">#C++ Primer</a>
+        <a href="/tags/NDN/">#NDN</a>
+      
+        <a href="/tags/Ad-hoc/">#Ad hoc</a>
+      
+        <a href="/tags/%E8%BD%AC%E5%8F%91/">#转发</a>
+      
+        <a href="/tags/%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93/">#可靠传输</a>
       
     </div>
   
@@ -379,8 +438,8 @@ words 中没有重复单词，这样调用 erase 也是安全的。</p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>第10章 泛型算法</div>
-      <div>https://kingw413.github.io/2023/09/05/Ch10-泛型算法/</div>
+      <div>AFIRM: Adaptive forwarding based link recovery for mobility support in NDN/IoT networks</div>
+      <div>https://kingw413.github.io/2023/09/07/论文阅读/2018_AFIRM/</div>
     </div>
     <div class="license-meta">
       
@@ -392,7 +451,7 @@ words 中没有重复单词，这样调用 erase 也是安全的。</p>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年9月5日</div>
+          <div>2023年9月7日</div>
         </div>
       
       
@@ -424,18 +483,12 @@ words 中没有重复单词，这样调用 erase 也是安全的。</p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/09/06/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/20230415-CCLF/" title="CCLF(基于内容连接度和位置感知的自适应转发)">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CCLF(基于内容连接度和位置感知的自适应转发)</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/08/27/Ch9-%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/" title="第9章 顺序容器">
-                        <span class="hidden-mobile">第9章 顺序容器</span>
+                      <a href="/2023/09/06/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/20230415-CCLF/" title="CCLF(基于内容连接度和位置感知的自适应转发)">
+                        <span class="hidden-mobile">CCLF(基于内容连接度和位置感知的自适应转发)</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
