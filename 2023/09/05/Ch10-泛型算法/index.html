@@ -16,31 +16,22 @@
   <meta name="author" content="Whd">
   <meta name="keywords" content="">
   
-    <meta name="description" content="基于内容连接性和可选位置信息设定计时器，从而自适应转发；同时通过密度感知的策略抑制冗余（抑制概率与邻居数量成正比）；增添了链路自适应层提供加包头、交互等功能。">
+    <meta name="description" content="顺序容器定义的操作很少，因此标准库定义了一组泛型算法，可以用于不同类型的容器和不同类型的元素。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CCLF(基于内容连接度和位置感知的自适应转发)">
-<meta property="og:url" content="https://kingw413.github.io/2023/04/15/20230415-CCLF/index.html">
+<meta property="og:title" content="第10章 泛型算法">
+<meta property="og:url" content="https://kingw413.github.io/2023/09/05/Ch10-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="基于内容连接性和可选位置信息设定计时器，从而自适应转发；同时通过密度感知的策略抑制冗余（抑制概率与邻居数量成正比）；增添了链路自适应层提供加包头、交互等功能。">
+<meta property="og:description" content="顺序容器定义的操作很少，因此标准库定义了一组泛型算法，可以用于不同类型的容器和不同类型的元素。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kingw413.github.io/2023/04/15/20230415-CCLF/1681475432881.png">
-<meta property="og:image" content="https://kingw413.github.io/2023/04/15/20230415-CCLF/1681479229022.png">
-<meta property="og:image" content="https://kingw413.github.io/2023/04/15/20230415-CCLF/1681480197163.png">
-<meta property="og:image" content="https://kingw413.github.io/2023/04/15/20230415-CCLF/1681480213422.png">
-<meta property="article:published_time" content="2023-04-15T06:17:05.343Z">
-<meta property="article:modified_time" content="2023-09-06T11:59:28.939Z">
+<meta property="article:published_time" content="2023-09-05T13:43:53.403Z">
+<meta property="article:modified_time" content="2023-08-31T15:10:45.000Z">
 <meta property="article:author" content="Whd">
-<meta property="article:tag" content="NDN">
-<meta property="article:tag" content="Ad hoc">
-<meta property="article:tag" content="转发">
-<meta property="article:tag" content="地理位置">
-<meta property="article:tag" content="可靠性">
+<meta property="article:tag" content="C++ Primer">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://kingw413.github.io/2023/04/15/20230415-CCLF/1681475432881.png">
   
   
   
-  <title>CCLF(基于内容连接度和位置感知的自适应转发) - Hexo</title>
+  <title>第10章 泛型算法 - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,7 +197,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="CCLF(基于内容连接度和位置感知的自适应转发)"></span>
+            <span id="subtitle" data-typed-text="第10章 泛型算法"></span>
           
         </div>
 
@@ -217,8 +208,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-15 14:17" pubdate>
-          2023年4月15日 下午
+        <time datetime="2023-09-05 21:43" pubdate>
+          2023年9月5日 晚上
         </time>
       </span>
     
@@ -229,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k 字
+          2k 字
         
       </span>
     
@@ -240,7 +231,7 @@
         
         
         
-          23 分钟
+          17 分钟
         
       </span>
     
@@ -278,12 +269,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">CCLF(基于内容连接度和位置感知的自适应转发)</h1>
+            <h1 style="display: none">第10章 泛型算法</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月6日 晚上
+                    本文最后更新于：2023年8月31日 晚上
                   
                 
               </p>
@@ -291,95 +282,58 @@
             
               <div class="markdown-body">
                 
-                <h2 id="information">Information:</h2>
-<ol type="1">
-<li>Title: Leveraging Content Connectivity and Location Awareness for
-Adaptive Forwarding in NDN-based Mobile Ad Hoc Networks
-(基于内容连接性和位置感知的NDN移动自组织网络自适应转发技术)</li>
-<li>Authors: Muktadir Chowdhury, Junaid Ahmed Khan, and Lan Wang</li>
-<li>Affiliation: University of Memphis (孟菲斯大学)</li>
-<li>Keywords: Named Data Networking, MANET, routing, forwarding
-(命名数据网络，移动自组织网络，路由，转发)</li>
-<li>Urls: Paper link: https://dl.acm.org/doi/10.1145/3405656.3418713,
-Github: None.</li>
-</ol>
-<h2 id="summary">Summary:</h2>
-<ul>
-<li>(1):
-本文研究了移动自组织网络（MANETs）中的数据转发问题，提出了基于命名数据网络（NDN）的内容连接性和位置感知的自适应转发策略。</li>
-<li>(2):
-传统的MANET转发策略在高度动态的网络中很难有效转发数据，并且在存在连接变化时通常需要大量控制报文来获取拓扑信息。本文提出的方法是<strong>基于内容连接性和位置信息</strong>对数据进行转发，避免了控制报文的开销，并且通过在网络层维护转发状态和期望转发反馈来加强转发策略的适应性。</li>
-<li>(3): 文中提出了一个自适应转发策略——Content Connectivity and
-Location-Aware Forwarding
-(CCLF)，在NDN网络中进行转发时基于内容连接性和位置信息，避免了控制报文和数据报文之间的不一致，并且通过减少无效广播来提升转发性能。此外还提出了适用于MANET网络的链路自适应层（A-LAL）以增强链路的灵活性和可靠性。</li>
-<li>(4):
-研究结果表明，CCLF能够有效降低数据转发的负载并保证数据的可靠获取，在信息中心化车联网方案中也比其他转发策略表现更为优异，验证了其在移动自组织网络中的有效性。</li>
-</ul>
-<h2 id="method">Method:</h2>
-<p>CCLF广播NDN数据包，让每个节点根据每个前缀的内容连接度和任何可用的地理位置信息独立地决定是否转发数据包；此外，它采用密度感知的抑制机制来减少不必要的包传输；此外，为ad
-hoc链路开发了链路适配层，以弥合CCLF与底层链路能力之间的差距。</p>
-<h3 id="内容连接度">内容连接度</h3>
-<p>内容连接度是<strong>细粒度</strong>的，区分于以往基于节点的整体兴趣满意度来量化节点的连通性，CCLF对<strong>每一个名称前缀</strong>分别计算一个内容连通性分数(Content
-Connectivity Score, CCS)。</p>
+                <h1 id="第10章-泛型算法">第10章 泛型算法</h1>
+<p>”算法“：实现了一些经典算法的公共接口，如排序和搜索。</p>
+<p>”泛型”：可以用于不同类型的元素和多种容器类型。</p>
+<h2 id="初识">1 初识</h2>
+<p>除了少数例外，标准库算法都对一个范围内的元素进行操作，称其为“输入范围”。接受输入范围的算法总是使用前两个参数来表示此范围，两个参数分别是指向要处理的第一个元素和尾元素之后位置的迭代器。</p>
 <blockquote>
-<p>This fine-grained measure of forwarding performance helps the network
-layer make more informed decisions when forwarding Interests to retrieve
-data from different producers.</p>
+<p>算法永远不会改变底层容器的大小。算法本身不会执行容器的操作，它们只会运行于迭代器之上，执行迭代器的操作。</p>
 </blockquote>
-<p>CCS计算公式： <span class="math display">\[
-CCS_j = \frac{D_j+\sum_{i\in Desc(j)}D_i}{I_j+\sum_{i\in Desc(j)}I_i}
-\]</span> <span class="math inline">\(D_j,I_j\)</span>分别表示对应前缀<span class="math inline">\(j\)</span>的Data、Interest个数，<span class="math inline">\(Desc(j)\)</span>表示前缀<span class="math inline">\(j\)</span>的子类的集合。</p>
-<p>CCS周期性更新，根据指数加权移动平均(EWMA): <span class="math display">\[
-\widehat{CCS}_{i,N}=\alpha \cdot CCS_{i,N}+(1-\alpha) \cdot
-\widehat{CCS}_{i,N-1}
-\]</span></p>
-<h3 id="地理位置">地理位置</h3>
-<p>地理位置在CCLF中作为<strong>可选项</strong>使用，Consumer可以将数据的位置附加到Interest中（<em>通过
-NDNLP header</em>）,节点接收到此类Interest后，计算位置分数（Location
-Score,LS）: <span class="math display">\[
-LS = 1- \frac{Dist(n,d)}{max(Dist(n,d),Dist(p,d))}
-\]</span> <span class="math inline">\(p,n,d\)</span>分别代表上一跳、当前、目的节点。</p>
-<p>CCS和位置信息通过新设定的C-L tree结构来储存、更新与检索： <img src="/2023/04/15/20230415-CCLF/1681475432881.png" srcset="/img/loading.gif" lazyload alt="C-L tree"></p>
-<h3 id="转发计时器">转发计时器</h3>
-<p>和其他策略类似，当某个节点通过其广播链路发送Interest后，传输范围内的其他节点分布式决定<strong>是否以及何时</strong>转发该兴趣。
-首先对CCS和LS加权： <span class="math display">\[
-w = \beta \cdot \widehat{CCS} + (1-\beta) \cdot LS
-\]</span> 再取倒数计算基本的定时器时间t: <span class="math display">\[
-t= \begin{cases}\min \left(\frac{1}{w}, T\right), &amp; \text { if }
-w&gt;0 \\ T, &amp; \text { if } w=0\end{cases}
-\]</span> T为t的一个上界，最终定时器的值在<span class="math inline">\(0.5t-1.5t\)</span>之间随机选取。</p>
-<h3 id="密度感知的转发抑制">密度感知的转发抑制</h3>
-<p>当节点在某个Interest的转发计时器到期之前收到相同Interest时，它使用一个<strong>与其邻居数量成正比的抑制概率</strong>来决定是否取消自己的兴趣转发：
-<span class="math display">\[
-p=min(K \cdot n, 1)
-\]</span>
-<em>Data包也采用相同的概率抑制方案，不过在Data包转发中，节点的Timer值是相同的。</em></p>
-<h3 id="ad-hoc链路适配层">AD-HOC链路适配层</h3>
-<p>开发了新的一个Ad-hoc Link Adaptation
-Layer(A-LAL)层面，为CCLF提供一些重要操作：</p>
-<figure>
-<img src="/2023/04/15/20230415-CCLF/1681479229022.png" srcset="/img/loading.gif" lazyload alt="A-LAL">
-<figcaption aria-hidden="true">A-LAL</figcaption>
-</figure>
-<ul>
-<li>在Interes包中添加NDNLP头(previous hop location和data location)</li>
-<li>利用MAC层的信息来跟踪邻居节点的数量(Neighbor-List)，以支持转发抑制概率的计算</li>
-<li>没有邻居节点时，存储包(PacketQueue)直至发现邻居</li>
-</ul>
-<p>最后，总的转发流程伪代码如下： <img src="/2023/04/15/20230415-CCLF/1681480197163.png" srcset="/img/loading.gif" lazyload alt="Interest转发"></p>
-<figure>
-<img src="/2023/04/15/20230415-CCLF/1681480213422.png" srcset="/img/loading.gif" lazyload alt="Data包转发">
-<figcaption aria-hidden="true">Data包转发</figcaption>
-</figure>
-<h2 id="conclusion">Conclusion:</h2>
-<ul>
-<li>(1):
-本文提出了一种基于内容连接性和位置感知的自适应转发策略，CCLF，用于解决移动自组织网络（MANETs）中的数据转发问题，具有实际应用价值。</li>
-<li>(2):
-创新点：本文提出的CCLF算法在转发决策中加入了内容连接性和位置信息，可以有效地避免控制报文开销和数据报文不一致问题，并减少无效广播，具有较高的性能表现。但是本文研究还存在一定的局限性，需要进一步拓展研究范围，对算法的参数调整及不同情境的适用性进行更深入的研究，并进行更全面的评估测试。</li>
-<li>性能：CCLF相较于传统的转发策略，在满足数据转发的负载要求的同时减少了数据转发的开销，具有较高的性能表现。</li>
-<li>工作量：本文的研究范围相对狭窄，需要进一步的实验和评估工作以证明其普适性和适用性。</li>
-</ul>
+<h3 id="只读算法">1.1 只读算法</h3>
+<p>只读取其输入范围内的元素，而不改变元素。</p>
+<p><code>accumulate(vec.begin(), vec.end(), 0)</code>：求和函数</p>
+<blockquote>
+<p>accumulate的第三个参数的类型决定了函数中使用哪个加法运算符以及返回值的类型。</p>
+</blockquote>
+<p><code>equal(vec1.cbegin(), vec1.cend(), vec2.cbegin())</code>：相等函数</p>
+<blockquote>
+<p>equal假定第二个序列不比第一个序列短。<strong>那些只接受一个单一迭代器来表示第二个序列的算法，都假定第二个序列不短于第一个序列</strong></p>
+</blockquote>
+<h3 id="写容器元素的算法">1.2 写容器元素的算法</h3>
+<p><strong>算法不检查写操作</strong></p>
+<p>一些算法将新值赋予序列中的元素。当我们使用这类算法时，必须注意确保序列原大小不小于我们要求算法写入的元素数目。因为算法本身并不检查写操作，且其自身不可能改变容器的大小。</p>
+<p><code>fill_n(dest, n, val)</code>函数接受一个迭代器、一个计数值和一个值。它将给定值赋予迭代器指向的元素开始的指定个元素。其假定写入指定个元素是安全的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++">vector&lt;<span class="hljs-type">int</span>&gt; vec;  <span class="hljs-comment">// 空向量</span><br><span class="hljs-comment">// 错误，修改vec中的10个不存在的元素</span><br><span class="hljs-built_in">fill_n</span>(vec.<span class="hljs-built_in">begin</span>(), vec.<span class="hljs-built_in">size</span>(), <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+<h5 id="插入迭代器"><strong>插入迭代器</strong></h5>
+<p>一种保证算法有足够元素空间来容纳输出数据的方法是使用插入迭代器。插入迭代器是一种向容器中添加元素的迭代器。通常情况，当我们通过一个
+迭代器向容器元素赋值时，值被赋予迭代器指向的元素。而当我们通过一个插入迭代器赋值时，一个与赋值号右侧值相等的元素被添加到容器中。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++">vector&lt;<span class="hljs-type">int</span>&gt; vec; <br><span class="hljs-keyword">auto</span> it = <span class="hljs-built_in">back_inserter</span>(vec); <br>*it = <span class="hljs-number">42</span>; <span class="hljs-comment">// vec中现在有一个元素，值为42</span><br><span class="hljs-built_in">fill_n</span>(<span class="hljs-built_in">back_inserter</span>(vec), <span class="hljs-number">10</span>, <span class="hljs-number">0</span>); <span class="hljs-comment">// 添加10个0到vec的末尾</span><br></code></pre></td></tr></table></figure>
+<h5 id="拷贝算法"><strong>拷贝算法</strong></h5>
+<p>拷贝算法是另一个向目的位置迭代器指向的输出序列中的元素写入数据的算法。其接受三个迭代器，前两个表示一个输入范围，第三个表示目的序列的起始位置。<strong>传递给copy的目的序列至少要包含与输入序列一样多的元素</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> a1[] = &#123;<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>&#125;;<br><span class="hljs-type">int</span> a2[<span class="hljs-built_in">sizeof</span>(a1)/<span class="hljs-built_in">sizeof</span>(*a1)];  <span class="hljs-comment">// a2与a1大小一样</span><br><span class="hljs-keyword">auto</span> ret = <span class="hljs-built_in">copy</span>(<span class="hljs-built_in">begin</span>(a1), <span class="hljs-built_in">end</span>(a1), a2); <span class="hljs-comment">// 把a1的内容拷贝给a2</span><br></code></pre></td></tr></table></figure>
+<h3 id="重排容器元素的算法">1.3 重排容器元素的算法</h3>
+<p>某些算法会重排容器中元素的顺序，一个明显的例子是sort。假定己有一个
+vector, 保存了多个单词，现化简这个vector，使得每个单词只出现一次。</p>
+<p>输入：<code>the quick red fox jumps over the slow red turtle</code></p>
+<p>目标输出：<code>fox jumps over quick red slow the turtle</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">elimDups</span><span class="hljs-params">(vector&lt;string&gt; &amp;words)</span> </span>&#123;<br>    <span class="hljs-built_in">sort</span>(words.<span class="hljs-built_in">begin</span>(), words.<span class="hljs-built_in">end</span>());<br>    <span class="hljs-keyword">auto</span> end_unique = <span class="hljs-built_in">unique</span>(words.<span class="hljs-built_in">begin</span>(), words.<span class="hljs-built_in">end</span>());<br>    words.<span class="hljs-built_in">erase</span>(end_unique, words.<span class="hljs-built_in">end</span>());<br>&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="消除重复单词">消除重复单词</h5>
+<p>完成sort后，words的顺序如下：</p>
+<p><code>fox jumps over quick red red slow the the turtle</code></p>
+<h6 id="使用unique">使用unique</h6>
+<p>unique算法重排输入序列，将相邻的重复项“消除”，并<strong>返回一个指向不重复值范围末尾的迭代器</strong>。调用unique后，vector将变成：</p>
+<p><code>fox jumps over quick red slow the turtle ??? ???</code></p>
+<p>words的大小并未改变，它仍有10个元素。但这些元素的顺序改变了——相邻的重复元素被<strong>“删除”</strong>了。我们将删除打引号是因为
+unique
+并不真的删除任何元素，<strong>它只是覆盖相邻的重复元素</strong>，使得不重复元素出现在序列开始部分。unique
+返回的迭代器指向最后一个不重复元素之后的位置。<strong>此位置之后的元素仍然存在，但我们不知道它们的值是什么</strong>。</p>
+<blockquote>
+<p>标准库算法对迭代器而不是容器进行操作。因此，算法不能（直接）添加或删除元素。</p>
+</blockquote>
+<h6 id="使用容器操作删除元素">使用容器操作删除元素</h6>
+<p>为了真正地删除无用元素，必须使用容器操作。使用erase删除从end_unique开始直至words末尾的范围内的所有元素。值得注意的是，即使
+words 中没有重复单词，这样调用 erase 也是安全的。</p>
 
                 
               </div>
@@ -398,7 +352,7 @@ Layer(A-LAL)层面，为CCLF提供一些重要操作：</p>
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="category-chain-item">论文阅读</a>
+  <a href="/categories/C/" class="category-chain-item">C++</a>
   
   
 
@@ -413,15 +367,7 @@ Layer(A-LAL)层面，为CCLF提供一些重要操作：</p>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/NDN/">#NDN</a>
-      
-        <a href="/tags/Ad-hoc/">#Ad hoc</a>
-      
-        <a href="/tags/%E8%BD%AC%E5%8F%91/">#转发</a>
-      
-        <a href="/tags/%E5%9C%B0%E7%90%86%E4%BD%8D%E7%BD%AE/">#地理位置</a>
-      
-        <a href="/tags/%E5%8F%AF%E9%9D%A0%E6%80%A7/">#可靠性</a>
+        <a href="/tags/C-Primer/">#C++ Primer</a>
       
     </div>
   
@@ -433,8 +379,8 @@ Layer(A-LAL)层面，为CCLF提供一些重要操作：</p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>CCLF(基于内容连接度和位置感知的自适应转发)</div>
-      <div>https://kingw413.github.io/2023/04/15/20230415-CCLF/</div>
+      <div>第10章 泛型算法</div>
+      <div>https://kingw413.github.io/2023/09/05/Ch10-泛型算法/</div>
     </div>
     <div class="license-meta">
       
@@ -446,7 +392,7 @@ Layer(A-LAL)层面，为CCLF提供一些重要操作：</p>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月15日</div>
+          <div>2023年9月5日</div>
         </div>
       
       
@@ -478,18 +424,12 @@ Layer(A-LAL)层面，为CCLF提供一些重要操作：</p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/08/21/Ch2-%E5%8F%98%E9%87%8F%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B/" title="第2章 变量和基本类型">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">第2章 变量和基本类型</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/03/31/20230323/" title="Ad Hoc">
-                        <span class="hidden-mobile">Ad Hoc</span>
+                      <a href="/2023/08/27/Ch9-%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/" title="第9章 顺序容器">
+                        <span class="hidden-mobile">第9章 顺序容器</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
