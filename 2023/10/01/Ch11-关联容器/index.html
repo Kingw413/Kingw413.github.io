@@ -16,29 +16,29 @@
   <meta name="author" content="Whd">
   <meta name="keywords" content="">
   
-    <meta name="description" content="AFIRM是一种用于NDN架构的内容驱动、自适应转发和完全分布式的算法，其可以在支持生产者移动性的同时，显著降低信令成本。主要通过移动点的下行通知来更新FIB，是一种routing-based的方案。">
+    <meta name="description" content="关联容器和顺序容器有着根本的不同：关联容器中的元素是按关键字来保存和访问的。与之相对，顺序容器中的元素是按它们在容器中的位置来顺序保存和访问的。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AFIRM: Adaptive forwarding based link recovery for mobility support in NDN&#x2F;IoT networks">
-<meta property="og:url" content="https://kingw413.github.io/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/index.html">
+<meta property="og:title" content="第11章 关联容器">
+<meta property="og:url" content="https://kingw413.github.io/2023/10/01/Ch11-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="AFIRM是一种用于NDN架构的内容驱动、自适应转发和完全分布式的算法，其可以在支持生产者移动性的同时，显著降低信令成本。主要通过移动点的下行通知来更新FIB，是一种routing-based的方案。">
+<meta property="og:description" content="关联容器和顺序容器有着根本的不同：关联容器中的元素是按关键字来保存和访问的。与之相对，顺序容器中的元素是按它们在容器中的位置来顺序保存和访问的。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kingw413.github.io/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/1693983884834.png">
-<meta property="og:image" content="https://kingw413.github.io/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/FIBs.png">
-<meta property="og:image" content="https://kingw413.github.io/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/链路恢复.png">
-<meta property="article:published_time" content="2023-09-06T16:11:44.621Z">
-<meta property="article:modified_time" content="2023-09-06T16:29:26.521Z">
+<meta property="og:image" content="https://kingw413.github.io/2023/10/01/Ch11-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/1696160599052.png">
+<meta property="og:image" content="https://kingw413.github.io/2023/10/01/Ch11-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/1696177468915.png">
+<meta property="og:image" content="https://kingw413.github.io/2023/10/01/Ch11-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/1696170073458.png">
+<meta property="og:image" content="https://kingw413.github.io/2023/10/01/Ch11-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/1696170264584.png">
+<meta property="og:image" content="https://kingw413.github.io/2023/10/01/Ch11-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/1696170442916.png">
+<meta property="og:image" content="https://kingw413.github.io/2023/10/01/Ch11-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/1696170935527.png">
+<meta property="article:published_time" content="2023-10-01T11:21:14.602Z">
+<meta property="article:modified_time" content="2023-10-01T16:28:19.885Z">
 <meta property="article:author" content="Whd">
-<meta property="article:tag" content="NDN">
-<meta property="article:tag" content="Ad hoc">
-<meta property="article:tag" content="转发">
-<meta property="article:tag" content="可靠传输">
+<meta property="article:tag" content="C++ Primer">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://kingw413.github.io/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/1693983884834.png">
+<meta name="twitter:image" content="https://kingw413.github.io/2023/10/01/Ch11-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/1696160599052.png">
   
   
   
-  <title>AFIRM: Adaptive forwarding based link recovery for mobility support in NDN/IoT networks - Hexo</title>
+  <title>第11章 关联容器 - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="AFIRM: Adaptive forwarding based link recovery for mobility support in NDN/IoT networks"></span>
+            <span id="subtitle" data-typed-text="第11章 关联容器"></span>
           
         </div>
 
@@ -215,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-09-07 00:11" pubdate>
-          2023年9月7日 凌晨
+        <time datetime="2023-10-01 19:21" pubdate>
+          2023年10月1日 晚上
         </time>
       </span>
     
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          2.2k 字
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          12 分钟
+          19 分钟
         
       </span>
     
@@ -276,12 +276,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">AFIRM: Adaptive forwarding based link recovery for mobility support in NDN/IoT networks</h1>
+            <h1 style="display: none">第11章 关联容器</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月7日 凌晨
+                    本文最后更新于：2023年10月2日 凌晨
                   
                 
               </p>
@@ -289,104 +289,55 @@
             
               <div class="markdown-body">
                 
-                <h2 style="color: #1B5E20">
-<span style="background-color: #f1f8e9">💡 Meta Data</span>
-</h2>
-<table>
-<tr>
-<th style="background-color: #dbeedd">
-Title
-</th>
-<td style="background-color: #dbeedd">
-AFIRM: Adaptive forwarding based link recovery for mobility support in
-NDN/IoT networks
-</td>
-</tr><tr>
-<th style="background-color: #f3faf4">
-Journal
-</th>
-<td style="background-color: #f3faf4">
-Future Generation Computer Systems
-</td>
-</tr><tr>
-<th style="background-color: #dbeedd">
-Authors
-</th>
-<td style="background-color: #dbeedd">
-Maroua Meddeb; Amine Dhraief; Abdelfettah Belghith; Thierry Monteil;
-Khalil Drira; Sofien Gannouni
-</td>
-</tr><tr>
-<th style="background-color: #f3faf4">
-Pub. date
-</th>
-<td style="background-color: #f3faf4">
-2018-10-01
-</td>
-</tr><tr>
-<th style="background-color: #dbeedd">
-期刊标签
-</th>
-<td style="background-color: #dbeedd">
-<span style="color: rgb(187, 91, 17)">CCF C</span>
-</td>
-</tr><tr>
-<th style="background-color: #f3faf4">
-DOI
-</th>
-<td style="background-color: #f3faf4">
-<a target="_blank" href="https://doi.org/10.1016/j.future.2018.04.087" rel="noopener noreferrer nofollow noopener">10.1016/j.future.2018.04.087</a>
-</td>
-</tr><tr>
-<th style="background-color: #dbeedd">
-附件
-</th>
-<td style="background-color: #dbeedd">
-<a href="zotero://open-pdf/0_X3ZVFIKW" rel="noopener noreferrer nofollow">🔗2018_Meddeb_AFIRM.pdf</a>
-</td>
-</tr>
-</table>
-<p>两种移动性：</p>
-<ul>
-<li>consumer mobility：只会引起数据包的丢失（类似于反向路径失效）</li>
-<li>producer mobility：会导致兴趣包的迷路（无法获得数据）</li>
-</ul>
-<p>解决producer mobility的四类方法：</p>
-<ul>
-<li><strong>location-based</strong>：依赖于额外的实体来维护内容名称与其位置之间的映射</li>
-<li><strong>locator/identifier
-separation</strong>：在命名方案中添加了定位器前缀</li>
-<li><strong>triangular</strong>：更新producer的旧位置到新位置的路径</li>
-<li><strong>routing-based</strong>：使用动态路由算法，将请求路由到正确的新位置</li>
-</ul>
+                <h1 id="第11章-关联容器">第11章 关联容器</h1>
+<h2 id="概述">1.概述</h2>
+<p>关联容器支持高效的关键字查找和访问。两个主要的关联容器类型是<code>map</code>和<code>set</code>。</p>
+<p>标准库提供 8 个关联容器，如表 11.1 所示。这 8
+个容器间的不同体现在三个维度上：（1）或者是一个 set, 或者是一个
+map；（2）或者要求不重复的关键字，或者允许重复关键字；（3）按顺序保存元素，或无序保存。</p>
+<p><img src="/2023/10/01/Ch11-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/1696160599052.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="操作">2. 操作</h2>
+<p>当定义一个 map 时，必须既指明关键字类型又指明值类型；而定义一个set
+时，只需指明关键字类型，因为 set 中没有值 。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 列表初始化</span><br>set&lt;string&gt; exclude = &#123;<span class="hljs-string">&quot;the&quot;</span>, <span class="hljs-string">&quot;and&quot;</span>, <span class="hljs-string">&quot;an&quot;</span>&#125;;<br>map&lt;string, string&gt; authors = &#123; &#123;<span class="hljs-string">&quot;Joyce&quot;</span>, <span class="hljs-string">&quot;James&quot;</span>&#125;, &#123;<span class="hljs-string">&quot;Austen&quot;</span>, <span class="hljs-string">&quot;Jane&quot;</span>&#125;, &#123;<span class="hljs-string">&quot;Dickens&quot;</span>, <span class="hljs-string">&quot;Charles&quot;</span>&#125; &#125;;<br></code></pre></td></tr></table></figure>
+<p>map和set类型都支持begin和end操作，可以使用这些函数获取迭代器。</p>
 <blockquote>
-<p>triangular和routing-based的不同：前者由移动后的producer触发请求，以更新新位置至原位置的路径(即节点的FIB)；后者则更新新位置至consumer的一条最优新路径。</p>
-<p>并且，triangular一般只支持intra-AS的小范围移动，routing-based则都可以支持。</p>
+<p>map和set的关键字是const的，不可以修改。</p>
 </blockquote>
-<p><img src="/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/1693983884834.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="研究内容"><span style="color: #2E7D32"><span style="background-color: #f1f8e9">📊 研究内容</span></span></h2>
-<h3 id="核心">核心：</h3>
-<p><strong>旨在通过在检测到移动后更新转发信息来恢复请求路径。它的目标是减少数据包丢失与一个非昂贵的解决方案方面的信令通信开销。</strong>（针对的是producer
-mobility)</p>
-<p>由两个阶段完成：</p>
-<h3 id="fibs-construction">FIBs construction</h3>
-<p>利用泛洪探索网络，并记录在FIB中，同时包括Data包的传入传出接口。迭代删除完整名称的最后一个组件，以添加新条目，删除可从多个端口满足的子前缀条目，如图中的,。</p>
-<figure>
-<img src="/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/FIBs.png" srcset="/img/loading.gif" lazyload alt="FIBs construction过程">
-<figcaption aria-hidden="true">FIBs construction过程</figcaption>
-</figure>
-<h3 id="link-recovery">Link recovery</h3>
-<p>使用<strong>keep-alive movement detection
-method</strong>，网关定期发送ping消息，以检查传感器是否仍然连接。每个网关处理其连接的传感器的移动性。当检测到连接失效时，旧位置、新位置以及其它节点均需做出反应。由带有flag=0/1的RECOVERY包指示，分别删除旧位置的FIB条目，为新位置添加FIB条目。如下图所示：</p>
-<figure>
-<img src="/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/链路恢复.png" srcset="/img/loading.gif" lazyload alt="链路恢复">
-<figcaption aria-hidden="true">链路恢复</figcaption>
-</figure>
-<h2 id="研究结论"><span style="color: #4A148C"><span style="background-color: #f5f5f5">🚩 研究结论</span></span></h2>
-<p>AFIRM是一种用于NDN架构的<strong>内容驱动、自适应转发和完全分布式</strong>的算法。其可以在支持生产者移动性的同时，显著<strong>降低信令成本</strong>。</p>
-<p>AFIRM的成本低于COBRA。这两种解决方案删除错误转发信息的成本几乎相同，但要添加新的转发信息，<strong>AFIRM会在上游进行，而COBRA会在下游添加信息</strong>。通过向消费者靠拢，中间节点给出了更精确的转发决策，从而在FIB中缺乏信息的情况下，可以避免洪泛。</p>
-<h2 id="感想-疑问"><span style="color: #006064"><span style="background-color: #e0f7fa">❓ 感想 &amp; 疑问</span></span></h2>
-<p>网关定期与连接的传感器发送ping以确认连接，这引起的开销是可接受的么？</p>
+<p>关联容器基于<code>pair</code>的标准库类型，一个 pair
+保存两个数据成员。类似容器，pair 是一个用来生成特定类型的模板。</p>
+<p><img src="/2023/10/01/Ch11-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/1696177468915.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="添加元素"><strong>添加元素</strong></h4>
+<p>对一个 map 进行 insert 操作时，必须记住元素类型是 pair 。</p>
+<p><img src="/2023/10/01/Ch11-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/1696170073458.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="删除元素"><strong>删除元素</strong></h4>
+<p>关联容器定义了三个版本的 erase, 如表 11.5 所示。</p>
+<p><img src="/2023/10/01/Ch11-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/1696170264584.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>map的下标操作</strong></p>
+<p><img src="/2023/10/01/Ch11-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/1696170442916.png" srcset="/img/loading.gif" lazyload></p>
+<blockquote>
+<p>对一个 map 使用下标操作，其行为与数组或 vector
+上的下标操作很不相同：使用一个不在容器中的关键字作为下标，会<strong>添加</strong>一个具有此关键字的元素到map
+中。</p>
+</blockquote>
+<h4 id="访问元素"><strong>访问元素</strong></h4>
+<p><img src="/2023/10/01/Ch11-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/1696170935527.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="示例程序"><strong>示例程序</strong></h3>
+<p>功能：给定一个 string, 将它转换为另一个
+string。程序的输入是两个文件。第一个文件保存的是一些规则，用来转换第二个文件中的文本。每条规则由两部分组成：一个可能出现在输入文件中的单词和一个用来替换它的短语。</p>
+<p>函数 word_transform 管理整个过程。它接受两个ifstream
+参数：第一个参数应绑定到单词转属文件，第二个参数应绑定到我们要转换的文本文件。函数
+buildMap 会读取转换规则文件，并创建一个 map,
+用于保存每个单词到其转换内容的映射。函数 transform 接受一个 string,
+如果存在转换规则，返回转换后的内容。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">word_transform</span><span class="hljs-params">(ifstream &amp;map_file, ifstream &amp;input)</span> </span>&#123;<br>    <span class="hljs-keyword">auto</span> trans_map = <span class="hljs-built_in">buildMap</span>(map_file); <span class="hljs-comment">// 保存转换规则</span><br>    string text;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-built_in">getline</span>(input,text)) &#123; <span class="hljs-comment">// 读取一行输入</span><br>        <span class="hljs-function">istringstream <span class="hljs-title">stream</span><span class="hljs-params">(text)</span></span>; <span class="hljs-comment">// 读取每个单词</span><br>        string word;<br>    	<span class="hljs-type">bool</span> firstword = <span class="hljs-literal">true</span>; <span class="hljs-comment">// 控制是否打印空格</span><br>    	<span class="hljs-keyword">while</span> (stream &gt;&gt; word) &#123;<br>        	<span class="hljs-keyword">if</span> (firstword)<br>                firstword = <span class="hljs-literal">false</span>;<br>            <span class="hljs-keyword">else</span><br>                cout&lt;&lt;<span class="hljs-string">&quot; &quot;</span>;  <span class="hljs-comment">// 在单词间打印一个空格</span><br>            <span class="hljs-comment">// transform返回它的第一个参数或其转换之后的形式</span><br>            cout &lt;&lt; <span class="hljs-built_in">transform</span>(word, trans_map);<br>        &#125;<br>        cout &lt;&lt; endl; <span class="hljs-comment">// 完成一行的转换</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>函数首先调用 buildMap 来生成单词转换 map, 我们将它保存在 trans_map
+中。函数的剩余部分处理输入文件。while 循环用
+getline一行一行地读取输入文件。这样做的目的是使得输出中的换行位置能和输入文件中一样。</p>
+<p><strong>建立转换映射</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">map&lt;string, string&gt; <span class="hljs-title">buildMap</span><span class="hljs-params">(ifstream &amp;map_file)</span> </span>&#123;<br>    map&lt;string, string&gt; trans_map; <br>    string key;<br>    string value;<br>    <span class="hljs-comment">// 读取第一个单词存入key中，行中剩余内容存入value</span><br>    <span class="hljs-keyword">while</span> (map_file &gt;&gt; key &amp;&amp; <span class="hljs-built_in">getline</span>(map_file, value))<br>        <span class="hljs-keyword">if</span> (value.<span class="hljs-built_in">size</span>() &gt; <span class="hljs-number">1</span>) <span class="hljs-comment">// 检查是否有转换规则</span><br>            trans_map[key] = value.<span class="hljs-built_in">substr</span>(<span class="hljs-number">1</span>); <span class="hljs-comment">// 跳过前导空格</span><br>    	<span class="hljs-keyword">else</span><br>            <span class="hljs-keyword">throw</span> <span class="hljs-built_in">runtime_error</span>(<span class="hljs-string">&quot;no rule for &quot;</span> + key);<br>    <span class="hljs-keyword">return</span> trans_map;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>生成转换文本</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">const</span> string &amp; <span class="hljs-title">transform</span><span class="hljs-params">(<span class="hljs-type">const</span> string &amp;s, <span class="hljs-type">const</span> map&lt;string, string&gt; &amp;m)</span> </span>&#123;<br>    <span class="hljs-keyword">auto</span> map_it = m.<span class="hljs-built_in">find</span>(s);<br>    <span class="hljs-keyword">if</span> (map_it != m.<span class="hljs-built_in">cend</span>())<br>        <span class="hljs-keyword">return</span> map_it-&gt;second;<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">return</span> s;<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -405,7 +356,7 @@ method</strong>，网关定期发送ping消息，以检查传感器是否仍然�
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="category-chain-item">论文阅读</a>
+  <a href="/categories/C/" class="category-chain-item">C++</a>
   
   
 
@@ -420,13 +371,7 @@ method</strong>，网关定期发送ping消息，以检查传感器是否仍然�
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/NDN/">#NDN</a>
-      
-        <a href="/tags/Ad-hoc/">#Ad hoc</a>
-      
-        <a href="/tags/%E8%BD%AC%E5%8F%91/">#转发</a>
-      
-        <a href="/tags/%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93/">#可靠传输</a>
+        <a href="/tags/C-Primer/">#C++ Primer</a>
       
     </div>
   
@@ -438,8 +383,8 @@ method</strong>，网关定期发送ping消息，以检查传感器是否仍然�
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>AFIRM: Adaptive forwarding based link recovery for mobility support in NDN/IoT networks</div>
-      <div>https://kingw413.github.io/2023/09/07/论文阅读/2018_AFIRM/</div>
+      <div>第11章 关联容器</div>
+      <div>https://kingw413.github.io/2023/10/01/Ch11-关联容器/</div>
     </div>
     <div class="license-meta">
       
@@ -451,7 +396,7 @@ method</strong>，网关定期发送ping消息，以检查传感器是否仍然�
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年9月7日</div>
+          <div>2023年10月1日</div>
         </div>
       
       
@@ -483,18 +428,12 @@ method</strong>，网关定期发送ping消息，以检查传感器是否仍然�
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/10/01/Ch11-%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/" title="第11章 关联容器">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">第11章 关联容器</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/06/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/20230415-CCLF/" title="CCLF(基于内容连接度和位置感知的自适应转发)">
-                        <span class="hidden-mobile">CCLF(基于内容连接度和位置感知的自适应转发)</span>
+                      <a href="/2023/09/07/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/2018_AFIRM/" title="AFIRM: Adaptive forwarding based link recovery for mobility support in NDN/IoT networks">
+                        <span class="hidden-mobile">AFIRM: Adaptive forwarding based link recovery for mobility support in NDN/IoT networks</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
